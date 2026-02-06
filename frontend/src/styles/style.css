@@ -1,13 +1,28 @@
 :root {
-/* CSS HEX */
---slate-blue: #7067cfff;
---light-green: #7ee081ff;
---night-bordeaux: #561d25ff;
---midnight-violet: #2b1c2aff;
---shadow-grey: #161c2cff;
---prussian-blue: #001b2eff;
---charcoal-blue: #385163ff;
---slate-grey: #6f8697ff;
---powder-blue: #a6bbcbff;
---alice-blue: #ddf0ffff;
+  /* CSS HEX */
+  --slate-blue: #7067cfff;
+  --light-green: #7ee081ff;
+  --night-bordeaux: #561d25ff;
+  --midnight-violet: #2b1c2aff;
+  --shadow-grey: #161c2cff;
+  --prussian-blue: #001b2eff;
+  --charcoal-blue: #385163ff;
+  --slate-grey: #6f8697ff;
+  --powder-blue: #a6bbcbff;
+  --alice-blue: #ddf0ffff;
+}
+.nav1 {
+  background-color: var(--prussian-blue);
+}
+.btn-primary {
+  background-color: var(--prussian-blue);
+}
+.btn {
+  border-color: var(--prussian-blue);
+}
+.btn:hover {
+  border-color: var(--powder-blue);
+}
+.btn-primary:hover {
+  background-color: var(--powder-blue);
 }
