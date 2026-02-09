@@ -3,7 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Competitive Programming Platform</title>
+    <title>AlgoSpark</title>
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      sizes="any"
+      href="../media/svg-components/code-slash.svg"
+    />
     <link
       rel="stylesheet"
       href="../../node_modules/bootstrap/dist/css/bootstrap.css"
@@ -23,7 +29,7 @@
             >
               <div class="d-flex justify-content-center align-items-center">
                 <object
-                  data="../../media/svg-components/code-slash.svg"
+                  data="../media/svg-components/code-slash.svg"
                   type="image/svg+xml"
                   width="50"
                   height="50"
@@ -36,7 +42,7 @@
               class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
             >
               <li>
-                <a href="index.html" class="nav-link text-white"> Home </a>
+                <a href="index.html" class="nav-link text-secondary"> Home </a>
               </li>
               <li>
                 <a href="problemset.html" class="nav-link text-white">
@@ -49,7 +55,7 @@
                 </a>
               </li>
               <li>
-                <a href="submissions.html" class="nav-link text-secondary">
+                <a href="submissions.html" class="nav-link text-white">
                   Submissions
                 </a>
               </li>
@@ -78,7 +84,7 @@
               aria-label="Search"
             />
           </form>
-          <div class="text-end">
+          <div class="">
             <button
               type="button"
               class="btn btn-light tex me-2"
@@ -114,6 +120,7 @@
                             type="text"
                             class="form-control"
                             id="floatingInputValue1"
+                            name="inputform"
                             placeholder="username1"
                             required
                           />
@@ -124,11 +131,13 @@
                             type="password"
                             class="form-control"
                             id="floatingInputValue3"
+                            name="inputform"
                             placeholder="***"
                             required
                           />
                           <label for="floatingInputValue3">password</label>
                         </div>
+
                         <div class="d-flex justify-content-end">
                           <input
                             type="submit"
@@ -138,6 +147,7 @@
                           <button
                             type="button"
                             class="btn btn-light me-2"
+                            name="reset"
                             data-bs-dismiss="modal"
                           >
                             Close
@@ -187,6 +197,7 @@
                             class="form-control"
                             id="floatingInputValue1"
                             placeholder="username1"
+                            name="inputform"
                             required
                           />
                           <label for="floatingInputValue1">Username</label>
@@ -197,6 +208,7 @@
                             class="form-control"
                             id="floatingInputValue2"
                             placeholder="name@example.com"
+                            name="inputform"
                             required
                           />
                           <label for="floatingInputValue2">email</label>
@@ -206,24 +218,32 @@
                           <input
                             type="password"
                             class="form-control"
-                            id="floatingInputValue3"
+                            id="floatingInputValue4"
+                            name="inputform"
                             placeholder="***"
                             required
                           />
-                          <label for="floatingInputValue3">password</label>
+                          <label for="floatingInputValue4">password</label>
                         </div>
                         <div class="form-floating px-1">
                           <input
                             type="password"
                             class="form-control"
-                            id="floatingInputValue3"
+                            id="floatingInputValue5"
+                            name="inputform"
                             placeholder="***"
                             required
+                            disabled
                           />
-                          <label for="floatingInputValue3"
+                          <label for="floatingInputValue5"
                             >confirm password</label
                           >
                         </div>
+                        <pre
+                          class="alert alert-danger"
+                          id="passalert"
+                          style="display: none"
+                        ></pre>
                         <div class="d-flex justify-content-end">
                           <input
                             type="submit"
@@ -234,6 +254,7 @@
                             type="button"
                             class="btn btn-light me-2"
                             data-bs-dismiss="modal"
+                            name="reset"
                           >
                             Close
                           </button>
@@ -249,5 +270,7 @@
       </div>
     </header>
     <div class="container"></div>
+    <script src="../javascript/login.js"></script>
+    <script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
   </body>
 </html>
