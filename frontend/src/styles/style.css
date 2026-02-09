@@ -14,15 +14,16 @@
 .nav1 {
   background-color: var(--prussian-blue);
 }
-.btn-primary {
+.log .btn-primary {
   background-color: var(--prussian-blue);
 }
-.btn {
+.log .btn {
   border-color: var(--prussian-blue);
 }
-.btn:hover {
-  border-color: var(--powder-blue);
+.log .btn:hover {
+  border-color: var(--prussian-blue);
+  background-color: var(--prussian-blue);
 }
-.btn-primary:hover {
-  background-color: var(--powder-blue);
+.log .btn-light:hover {
+  color: white;
 }
