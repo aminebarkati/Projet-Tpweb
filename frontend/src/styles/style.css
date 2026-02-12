@@ -11,6 +11,9 @@
   --powder-blue: #a6bbcbff;
   --alice-blue: #ddf0ffff;
 }
+.text-info {
+  color: var(--prussian-blue) !important;
+}
 .nav1 {
   background-color: var(--prussian-blue);
 }
