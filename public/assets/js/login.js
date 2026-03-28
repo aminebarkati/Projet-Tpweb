@@ -40,11 +40,10 @@ confirmpassword.addEventListener("input", (e) => {
   if (password.value != confirmpassword.value) {
     alert.style.display = "block";
     alert.textContent = "Passwords don't match!";
-    confirmpassword.classList.add("is-invalid");
   } else {
     alert.style.display = "none ";
-    confirmpassword.classList.remove("is-invalid");
   }
+  confirmpassword.classList.toggle("is-invalid");
 });
 
 password.addEventListener("blur", (e) => {
@@ -70,12 +69,11 @@ password.addEventListener("blur", (e) => {
     confirmpassword.value = "";
     alert.style.display = "block";
     alert.textContent = msg;
-    password.classList.add("is-invalid");
   } else {
     alert.style.display = "none";
     confirmpassword.disabled = false;
-    password.classList.remove("is-invalid");
-  }
+   }
+  password.classList.toggle("is-invalid");
 });
 
 form.addEventListener("submit", (e) => {

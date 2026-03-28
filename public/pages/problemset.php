@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlgoSpark</title>
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    sizes="any"
+    href="/public/assets/media/svg-components/code-slash.svg" />
+  <link
+    rel="stylesheet"
+    href="/public/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/public/assets/css/style.css" />
+</head>
+
+<body>
+  <header>
+    <div class="px-3 py-4 border-bottom nav1">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a
+            href="#"
+            class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <div class="d-flex justify-content-center align-items-center">
+              <object
+                data="/public/assets/media/svg-components/code-slash.svg"
+                type="image/svg+xml"
+                width="50"
+                height="50"
+                class="px-1"></object>
+              <div class="px-1 mb-0 h4 text-white">AlgoSpark</div>
+            </div>
+          </a>
+          <ul
+            class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="/" class="nav-link text-white"> Home </a>
+            </li>
+            <li>
+              <a href="/public/pages/problemset.php" class="nav-link text-secondary">
+                Problemset
+              </a>
+            </li>
+            <li>
+              <a href="/public/pages/contests.php" class="nav-link text-white">
+                Contests
+              </a>
+            </li>
+            <li>
+              <a href="/public/pages/submissions.php" class="nav-link text-white">
+                Submissions
+              </a>
+            </li>
+            <li>
+              <a href="/public/pages/leaderboard.php" class="nav-link text-white">
+                Leaderboard
+              </a>
+            </li>
+            <li>
+              <a href="/public/pages/profile.php" class="nav-link text-white"> Profile </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="px-3 py-2 border-bottom mb-3 log">
+      <div class="container d-flex flex-wrap justify-content-center">
+        <form
+          class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto"
+          role="search">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Search..."
+            aria-label="Search" />
+        </form>
+        <div class="">
+          <button
+            type="button"
+            class="btn btn-light tex me-2"
+            id="logbtn"
+            data-bs-toggle="modal"
+            data-bs-target="#LogModal">
+            Login
+          </button>
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#signmodal"
+            id="signbtn">
+            Sign-up
+          </button>
+          <div
+            class="modal fade"
+            id="signmodal"
+            tabindex="-1"
+            aria-labelledby="signmodalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="signmodalLabel">
+                    Sign-up
+                  </h1>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form class="form" id="signupform" novalidate>
+                    <div class="vstack gap-3">
+                      <div class="form-floating px-1">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInputValue1"
+                          placeholder="username1"
+                          name="inputform"
+                          required />
+                        <label for="floatingInputValue1">Username</label>
+                      </div>
+                      <div class="form-floating px-1">
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="floatingInputValue2"
+                          placeholder="name@example.com"
+                          name="inputform"
+                          required />
+                        <label for="floatingInputValue2">email</label>
+                      </div>
+
+                      <div class="form-floating px-1">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="floatingInputValue4"
+                          name="inputform"
+                          placeholder="***"
+                          required />
+                        <label for="floatingInputValue4">password</label>
+                      </div>
+                      <div class="form-floating px-1">
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="floatingInputValue5"
+                          name="inputform"
+                          placeholder="***"
+                          required
+                          disabled />
+                        <label for="floatingInputValue5">confirm password</label>
+                      </div>
+                      <pre
+                        class="alert alert-danger"
+                        id="passalert"
+                        style="display: none"></pre>
+                      <div class="d-flex justify-content-end">
+                        <input
+                          type="submit"
+                          class="btn btn-primary me-2"
+                          value="Sign-up" />
+                        <button
+                          type="button"
+                          class="btn btn-light me-2"
+                          data-bs-dismiss="modal"
+                          name="reset">
+                          Close
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="container mt-5 table-responsive">
+    <table
+      class="table table-striped align-middle table-hover caption-top test-info">
+      <caption>
+        Available problemes
+      </caption>
+      <thead>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Last submit</th>
+        <th scope="col">difficulity</th>
+        <th scope="col">Solves</th>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">
+            <a
+              href="/public/pages/problem.php"
+              class="text-decoration-none text-info"
+              style="width: 100%; height: 100%">2193E
+            </a>
+          </td>
+          <td scope="col">
+            <a
+              href="/public/pages/problem.php"
+              class="text-decoration-none text-info"
+              style="width: 100%; height: 100%">
+              <h6 class="text-info">Product Queries</h6>
+              <small>dp, math, number theory, shortest paths</small>
+            </a>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+        <tr>
+          <td scope="row">2197B</td>
+          <td scope="col">
+            <h6 class="text-info">Array and Permutation</h6>
+            <small>implementation, sortings, two pointers</small>
+          </td>
+          <td>
+            <h6 class="text-secondary">no submit</h6>
+          </td>
+          <td>1200</td>
+          <td>11 692</td>
+        </tr>
+        <tr>
+          <td scope="row">2193H</td>
+          <td scope="col">
+            <h6 class="text-info">Remove the Grail Tree</h6>
+            <small>dfs and similar, dp, graphs, greedy, implementation,
+              trees</small>
+          </td>
+          <td>
+            <h6 class="text-danger">wrong answer on test 5</h6>
+          </td>
+          <td>2400</td>
+          <td>729</td>
+        </tr>
+        <tr>
+          <td scope="row">2193E</td>
+          <td scope="col">
+            <h6 class="text-info">Product Queries</h6>
+            <small>dp, math, number theory, shortest paths</small>
+          </td>
+          <td>
+            <h6 class="text-success">accepted</h6>
+          </td>
+          <td>1300</td>
+          <td>12 637</td>
+        </tr>
+      </tbody>
+      <tfoot class="table-group-divider"></tfoot>
+    </table>
+  </div>
+  <script src="/public/assets/js/login.js"></script>
+  <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

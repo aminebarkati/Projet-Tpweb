@@ -8,13 +8,13 @@
       rel="icon"
       type="image/svg+xml"
       sizes="any"
-      href="../media/svg-components/code-slash.svg"
+      href="/public/assets/media/svg-components/code-slash.svg"
     />
     <link
       rel="stylesheet"
-      href="../../node_modules/bootstrap/dist/css/bootstrap.css"
+      href="/public/assets/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="/public/assets/css/style.css" />
   </head>
   <body>
     <header>
@@ -29,7 +29,7 @@
             >
               <div class="d-flex justify-content-center align-items-center">
                 <object
-                  data="../media/svg-components/code-slash.svg"
+                  data="/public/assets/media/svg-components/code-slash.svg"
                   type="image/svg+xml"
                   width="50"
                   height="50"
@@ -42,30 +42,30 @@
               class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
             >
               <li>
-                <a href="index.html" class="nav-link text-secondary"> Home </a>
+                <a href="/" class="nav-link text-secondary"> Home </a>
               </li>
               <li>
-                <a href="problemset.html" class="nav-link text-white">
+                <a href="/public/pages/problemset.php" class="nav-link text-white">
                   Problemset
                 </a>
               </li>
               <li>
-                <a href="contests.html" class="nav-link text-white">
+                <a href="/public/pages/contests.php" class="nav-link text-white">
                   Contests
                 </a>
               </li>
               <li>
-                <a href="submissions.html" class="nav-link text-white">
+                <a href="/public/pages/submissions.php" class="nav-link text-white">
                   Submissions
                 </a>
               </li>
               <li>
-                <a href="leaderboard.html" class="nav-link text-white">
+                <a href="/public/pages/leaderboard.php" class="nav-link text-white">
                   Leaderboard
                 </a>
               </li>
               <li>
-                <a href="profile.html" class="nav-link text-white"> Profile </a>
+                <a href="/public/pages/profile.php" class="nav-link text-white"> Profile </a>
               </li>
             </ul>
           </div>
@@ -270,7 +270,7 @@
       </div>
     </header>
     <div class="container"></div>
-    <script src="../javascript/login.js"></script>
-    <script src="../../node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/public/assets/js/login.js"></script>
+    <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
