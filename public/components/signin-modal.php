@@ -17,7 +17,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="form" id="signupform" novalidate>
+                <form class="form" action="../../backend/auth/signin.php" method="POST" id="signupform" novalidate>
                     <div class="vstack gap-3">
                         <div class="form-floating px-1">
                             <input
@@ -25,7 +25,7 @@
                                 class="form-control"
                                 id="floatingInputValue1"
                                 placeholder="username1"
-                                name="inputform"
+                                name="username"
                                 required />
                             <label for="floatingInputValue1">Username</label>
                         </div>
@@ -35,7 +35,7 @@
                                 class="form-control"
                                 id="floatingInputValue2"
                                 placeholder="name@example.com"
-                                name="inputform"
+                                name="email"
                                 required />
                             <label for="floatingInputValue2">email</label>
                         </div>
@@ -45,7 +45,7 @@
                                 type="password"
                                 class="form-control"
                                 id="floatingInputValue4"
-                                name="inputform"
+                                name="password"
                                 placeholder="***"
                                 required />
                             <label for="floatingInputValue4">password</label>

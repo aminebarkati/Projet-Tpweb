@@ -15,7 +15,7 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="form" id="loginform" novalidate>
+                <form class="form" action="../../backend/auth/login.php" id="loginform" novalidate>
                     <div class="vstack gap-3">
                         <div class="form-floating px-1">
                             <input
@@ -25,7 +25,7 @@
                                 name="inputform"
                                 placeholder="username1"
                                 required />
-                            <label for="floatingInputValue1">Username</label>
+                            <label for="floatingInputValue11">Username</label>
                         </div>
                         <div class="form-floating px-1">
                             <input
