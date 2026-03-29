@@ -15,14 +15,14 @@
                     aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="form" action="../../backend/auth/login.php" id="loginform" novalidate>
+                <form class="form" action="../../backend/auth/login.php" method="POST" id="loginform" novalidate>
                     <div class="vstack gap-3">
                         <div class="form-floating px-1">
                             <input
                                 type="text"
                                 class="form-control"
                                 id="floatingInputValue1"
-                                name="inputform"
+                                name="username"
                                 placeholder="username1"
                                 required />
                             <label for="floatingInputValue11">Username</label>
@@ -32,7 +32,7 @@
                                 type="password"
                                 class="form-control"
                                 id="floatingInputValue3"
-                                name="inputform"
+                                name="password"
                                 placeholder="***"
                                 required />
                             <label for="floatingInputValue3">password</label>

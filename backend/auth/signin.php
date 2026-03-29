@@ -16,6 +16,7 @@ $referer = $_SERVER['HTTP_REFERER'];
 
 if ($valid) {
     $_SESSION['user'] = $username;
+    setcookie("logedIn", true, time() + 3600 * 48, "/");
     $UserRepository->create(["username" => $username, "email" => $email, "password" => $hashToStoreInDb]);
     echo "<script>
         alert('Signed In Sucessfully !');
