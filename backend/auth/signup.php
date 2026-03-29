@@ -16,16 +16,11 @@ $referer = $_SERVER['HTTP_REFERER'];
 
 if ($valid) {
     $_SESSION['user'] = $username;
-    setcookie("logedIn", true, time() + 3600 * 48, "/");
+    setcookie("loggedIn", true, time() + 3600 * 48, "/");
     $UserRepository->create(["username" => $username, "email" => $email, "password" => $hashToStoreInDb]);
-    echo "<script>
-        alert('Signed In Sucessfully !');
-        window.location.href = '{$referer}';
-        </script>";
+    echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
+    exit;
 } else {
-    echo "<script>
-        alert('Sorry, this username is unavailable !');
-        window.location.href = '{$referer}';
-        </script>";
-    // header("Location: $referer");
+    echo json_encode(['success' => false, 'message' => 'This username is unavailable !']);
+    exit;
 }

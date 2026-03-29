@@ -18,30 +18,30 @@
             <ul
                 class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                 <li>
-                    <a href="/" class="nav-link text-secondary"> Home </a>
+                    <a href="/" class="tabs nav-link text-white"> Home </a>
                 </li>
                 <li>
-                    <a href="/public/pages/problemset.php" class="nav-link text-white">
+                    <a href="/public/pages/problemset.php" class="tabs nav-link text-white">
                         Problemset
                     </a>
                 </li>
                 <li>
-                    <a href="/public/pages/contests.php" class="nav-link text-white">
+                    <a href="/public/pages/contests.php" class="tabs nav-link text-white">
                         Contests
                     </a>
                 </li>
                 <li>
-                    <a href="/public/pages/submissions.php" class="nav-link text-white">
+                    <a href="/public/pages/submissions.php" class="tabs nav-link text-white">
                         Submissions
                     </a>
                 </li>
                 <li>
-                    <a href="/public/pages/leaderboard.php" class="nav-link text-white">
+                    <a href="/public/pages/leaderboard.php" class="tabs nav-link text-white">
                         Leaderboard
                     </a>
                 </li>
                 <li>
-                    <a href="/public/pages/profile.php" class="nav-link text-white"> Profile </a>
+                    <a href="/public/pages/profile.php" class="tabs nav-link text-white"> Profile </a>
                 </li>
             </ul>
         </div>

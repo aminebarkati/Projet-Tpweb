@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/public/index.php';
+require __DIR__ . '/public/pages/index.php';

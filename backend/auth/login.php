@@ -4,20 +4,19 @@ require_once '../autoloader.php';
 $username = $_POST['username'];
 $UserRepository = new UserRepository();
 $User = $UserRepository->findByUsername($username);
-$existingHashFromDb = $User->password;
-$referer = $_SERVER['HTTP_REFERER'];
-$isPasswordCorrect = password_verify($_POST['password'], $existingHashFromDb);
+if ($User) {
+    $existingHashFromDb = $User->password;
+    $isPasswordCorrect = password_verify($_POST['password'], $existingHashFromDb);
+} else {
+    $isPasswordCorrect = false;
+}
+
 if ($isPasswordCorrect) {
     $_SESSION['user'] = $username;
-    setcookie("logedIn", true, time() + 3600 * 48, "/");
-    echo "<script>
-        alert('Loged In Sucessfully !');
-        window.location.href = '{$referer}';
-        </script>";
+    setcookie("loggedIn", true, time() + 3600 * 48, "/");
+    echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
+    exit;
 } else {
-    echo "<script>
-        alert('Incorrect password !');
-        window.location.href = '{$referer}';
-        </script>";
-    // header("Location: $referer");
+    echo json_encode(['success' => false, 'message' => 'Invalid email or password !']);
+    exit;
 }

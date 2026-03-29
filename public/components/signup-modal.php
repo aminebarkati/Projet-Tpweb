@@ -23,47 +23,47 @@
                             <input
                                 type="text"
                                 class="form-control"
-                                id="floatingInputValue1"
+                                id="floatingInputValue11"
                                 placeholder="username1"
                                 name="username"
                                 required />
-                            <label for="floatingInputValue1">Username</label>
+                            <label for="floatingInputValue11">Username</label>
                         </div>
                         <div class="form-floating px-1">
                             <input
                                 type="email"
                                 class="form-control"
-                                id="floatingInputValue2"
+                                id="floatingInputValue22"
                                 placeholder="name@example.com"
                                 name="email"
                                 required />
-                            <label for="floatingInputValue2">email</label>
+                            <label for="floatingInputValue22">email</label>
                         </div>
 
                         <div class="form-floating px-1">
                             <input
                                 type="password"
                                 class="form-control"
-                                id="floatingInputValue4"
+                                id="floatingInputValue33"
                                 name="password"
                                 placeholder="***"
                                 required />
-                            <label for="floatingInputValue4">password</label>
+                            <label for="floatingInputValue33">password</label>
                         </div>
                         <div class="form-floating px-1">
                             <input
                                 type="password"
                                 class="form-control"
-                                id="floatingInputValue5"
+                                id="floatingInputValue44"
                                 name="inputform"
                                 placeholder="***"
                                 required
                                 disabled />
-                            <label for="floatingInputValue5">confirm password</label>
+                            <label for="floatingInputValue44">confirm password</label>
                         </div>
                         <pre
                             class="alert alert-danger"
-                            id="passalert"
+                            id="passalert2"
                             style="display: none"></pre>
                         <div class="d-flex justify-content-end">
                             <input

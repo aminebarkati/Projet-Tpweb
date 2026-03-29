@@ -16,5 +16,5 @@
         id="signbtn">
         Sign-up
     </button>
-    <?php require_once "signin-modal.php"; ?>
+    <?php require_once "signup-modal.php"; ?>
 </div>
