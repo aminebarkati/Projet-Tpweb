@@ -46,21 +46,31 @@ This web application provides a competitive programming environment where users 
 
 ```
 Projet-web/
-├── backend/              # PHP backend files
-├── frontend/            # Frontend application
-│   ├── src/
-│   │   ├── pages/      # HTML pages
-│   │   └── styles/     # CSS stylesheets
-│   └── package.json
-├── docs/                # Documentation
-└── README.md           # This file
+├── backend/                        # PHP backend logic
+│   ├── auth/                       # Authentication handlers
+│   ├── class/                      # DB and repository classes
+│   └── autoloader.php
+├── public/                         # Public web files
+│   ├── assets/
+│   │   ├── css/                    # Bootstrap + custom styles
+│   │   ├── js/                     # Client-side scripts
+│   │   └── media/                  # Images and icons
+│   ├── components/                 # Reusable PHP UI components
+│   └── pages/                      # Main platform pages
+├── docs/                           # Project documentation
+├── index.php                       # Entry point
+├── favicon.ico
+└── README.md
 ```
 
 ## 📦 Prerequisites
 
-Before running this project, make sure you have (for now):
+Before running this project, make sure you have:
 
-- **Node.js & npm**: For frontend package management
+- **PHP 8.0+** with PDO and MySQL extensions enabled
+- **MySQL 5.7+** (or MariaDB equivalent)
+- **A local web server** (Apache/Nginx) or PHP built-in server
+- **Git** (to clone the repository)
 
 ## ⚙️ Installation
 
@@ -71,11 +81,45 @@ git clone <repository-url>
 cd Projet-web
 ```
 
-### 2. Install Dependencies
+### 2. Configure the Database Connection
+
+Update your MySQL credentials in `backend/class/ConnexionDB.php`:
+
+```php
+private static $_dbname = "your_database_name";
+private static $_user = "your_mysql_user";
+private static $_pwd = "your_mysql_password";
+private static $_host = "localhost";
+```
+
+### 3. Create and Prepare the Database
+
+Create the database in MySQL:
+
+```sql
+CREATE DATABASE your_database_name;
+```
+
+Then import your SQL schema/data file if available.
+
+### 4. Run the Project
+
+Option A - PHP built-in server (quick local setup):
 
 ```bash
-cd frontend
-npm install
+php -S localhost:8000
+```
+
+Option B - Apache/Nginx:
+
+- Point your web server to the project root.
+- Make sure `index.php` is used as the default entry file.
+
+### 5. Open in Browser
+
+```bash
+# with built-in server
+http://localhost:8000
 ```
 
 ## 🎮 Usage

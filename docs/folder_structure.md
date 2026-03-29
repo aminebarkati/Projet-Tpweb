@@ -15,6 +15,7 @@
             ├── UserRepository.php
         ├── autoloader.php
     └── 📁docs
+        ├── folder_structure.md
     └── 📁public
         └── 📁assets
             └── 📁css
@@ -27,9 +28,11 @@
             └── 📁media
                 └── 📁svg-components
                     ├── code-slash.svg
+                ├── code-slash.png
                 ├── palette.png
         └── 📁components
             ├── btns-bar.php
+            ├── head.php
             ├── login-modal.php
             ├── logout-bar.php
             ├── nav.php
@@ -44,6 +47,7 @@
             ├── profile.php
             ├── submissions.php
     ├── .gitignore
+    ├── favicon.ico
     ├── index.php
     ├── README.md
     └── readme2.md
