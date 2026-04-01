@@ -17,16 +17,34 @@
 .nav1 {
   background-color: var(--prussian-blue);
 }
-.log .btn-primary {
+.btn-primary {
   background-color: var(--prussian-blue);
 }
-.log .btn {
+.btn-primary,
+.btn-light {
   border-color: var(--prussian-blue);
 }
-.log .btn:hover {
+.btn-red {
+  background-color: var(--night-bordeaux);
+  color: white;
+}
+.btn-red:hover {
+  background-color: var(--night-bordeaux) !important;
+  color: white !important;
+}
+.btn-light-red {
+  color: var(--night-bordeaux);
+  border-color: var(--night-bordeaux);
+}
+.btn-light-red:hover {
+  background-color: var(--night-bordeaux) !important;
+  color: white !important;
+}
+.btn-primary:hover,
+.btn-light:hover {
   border-color: var(--prussian-blue);
   background-color: var(--prussian-blue);
 }
-.log .btn-light:hover {
+.btn-light:hover {
   color: white;
 }

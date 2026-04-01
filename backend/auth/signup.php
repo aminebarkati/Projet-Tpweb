@@ -16,7 +16,8 @@ $referer = $_SERVER['HTTP_REFERER'];
 
 if ($valid) {
     $_SESSION['user'] = $username;
-    setcookie("loggedIn", true, time() + 3600 * 48, "/");
+    $_SESSION['role'] = 'User';
+    $_SESSION['loggedIn'] = true;
     $UserRepository->create(["username" => $username, "email" => $email, "password" => $hashToStoreInDb]);
     echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
     exit;

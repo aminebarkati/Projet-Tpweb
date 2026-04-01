@@ -8,4 +8,5 @@ interface IRepository
     public function delete($id);
 
     public function create($params);
+    public function update($id, $params);
 }

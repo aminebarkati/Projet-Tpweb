@@ -11,6 +11,7 @@ require_once __DIR__ . '/../components/head.php';
     require_once __DIR__ . '/../components/search-bar.php';
     ?>
   </header>
+
   <div class="container"></div>
   <script src="/public/assets/js/auth.js"></script>
   <script src="/public/assets/js/index.js"></script>

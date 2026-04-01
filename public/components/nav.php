@@ -40,9 +40,19 @@
                         Leaderboard
                     </a>
                 </li>
-                <li>
-                    <a href="/public/pages/profile.php" class="tabs nav-link text-white"> Profile </a>
-                </li>
+                <?php
+                session_start();
+                if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin") {
+                    echo "<li>
+                    <a href='/public/pages/profile.php' class='tabs nav-link text-white'> Profile </a>
+                    </li>";
+                }
+                if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin") {
+                    echo "<li>
+                    <a href='/public/pages/users.php' class='tabs nav-link text-white'> Users </a>
+                    </li>";
+                }
+                ?>
             </ul>
         </div>
     </div>

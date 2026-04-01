@@ -10,7 +10,8 @@
                 aria-label="Search" />
         </form>
         <?php
-        if (!$_COOKIE['loggedIn']) {
+        session_start();
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
             require_once 'btns-bar.php';
         } else {
             require_once 'logout-bar.php';

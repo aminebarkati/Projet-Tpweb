@@ -13,10 +13,11 @@ if ($User) {
 
 if ($isPasswordCorrect) {
     $_SESSION['user'] = $username;
-    setcookie("loggedIn", true, time() + 3600 * 48, "/");
-    echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
+    $_SESSION['role'] = !empty($User->is_admin) ? 'Admin' : 'User';
+    $_SESSION['loggedIn'] = true;
+    echo json_encode(['success' => true, 'redirect' => $_SESSION['HTTP_REFERER']]);
     exit;
 } else {
-    echo json_encode(['success' => false, 'message' => 'Invalid email or password !']);
+    echo json_encode(['success' => false, 'message' => 'Invalid username or password !']);
     exit;
 }

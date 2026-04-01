@@ -2,6 +2,31 @@
 <html lang="en">
 <?php
 require_once __DIR__ . '/../components/head.php';
+require_once __DIR__ . '/../../backend/autoloader.php';
+
+$UserRepository = new UserRepository();
+$actorUser = $currentUser;
+$targetUser = $actorUser;
+
+if ($actorUser && !empty($actorUser->is_admin)) {
+  $requestedTargetId = isset($_GET['user_id']) ? (int) $_GET['user_id'] : (int) $actorUser->id;
+  if ($requestedTargetId > 0) {
+    $candidateTarget = $UserRepository->findById($requestedTargetId);
+    if ($candidateTarget) {
+      $targetUser = $candidateTarget;
+    }
+  }
+}
+
+$isAdminViewer = $actorUser && !empty($actorUser->is_admin);
+$isManagingOtherUser = $isAdminViewer && $targetUser && ((int) $actorUser->id !== (int) $targetUser->id);
+$requireCurrentPassword = !$isManagingOtherUser;
+
+$avatarUrlValue = $targetUser ? trim((string) ($targetUser->avatar_url ?? '')) : '';
+$avatarSrc = $avatarUrlValue !== '' ? '/storage/imgs/' . rawurlencode($avatarUrlValue) : '';
+$showAvatarImage = $avatarSrc !== '';
+$roleLabel = ($targetUser && !empty($targetUser->is_admin)) ? 'Admin' : 'User';
+$initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)) : 'U';
 ?>
 
 <body>
@@ -11,8 +36,203 @@ require_once __DIR__ . '/../components/head.php';
     require_once __DIR__ . '/../components/search-bar.php';
     ?>
   </header>
-  <div class="container"></div>
+  <main class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-10">
+        <div class="card shadow-sm border-0 mb-4">
+          <div class="card-body p-4">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-4">
+              <div class="position-relative">
+                <?php if ($showAvatarImage): ?>
+                  <img
+                    id="profileAvatarImage"
+                    src="<?= htmlspecialchars($avatarSrc, ENT_QUOTES, 'UTF-8') ?>"
+                    alt="Profile avatar"
+                    class="rounded-circle border"
+                    style="width: 96px; height: 96px; object-fit: cover;"
+                    onerror="this.classList.add('d-none'); this.nextElementSibling.classList.remove('d-none');">
+                <?php endif; ?>
+                <div
+                  id="profileAvatarFallback"
+                  class="rounded-circle border text-white d-flex align-items-center justify-content-center <?= $showAvatarImage ? 'd-none' : '' ?>"
+                  style="width: 96px; height: 96px; font-size: 2rem; background: linear-gradient(135deg, #385163ff, #001b2eff);">
+                  <?= htmlspecialchars($initial, ENT_QUOTES, 'UTF-8') ?>
+                </div>
+                <?php if ($targetUser): ?>
+                  <form id="avatarUploadForm" method="post" action="" enctype="multipart/form-data" class="position-absolute top-0 start-0 w-100 h-100">
+                    <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                    <label for="avatar_file_top" class="w-100 h-100 d-flex align-items-end justify-content-center text-white" style="cursor:pointer;">
+                      <span class="badge text-bg-dark mb-1" style="opacity:0.9;">Change</span>
+                    </label>
+                    <input
+                      type="file"
+                      class="position-absolute top-0 start-0 w-100 h-100 opacity-0"
+                      id="avatar_file_top"
+                      name="avatar_file"
+                      accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
+                  </form>
+                <?php endif; ?>
+              </div>
+              <div class="text-center text-md-start">
+                <h2 id="profileDisplayUsername" class="h4 mb-1"><?= $targetUser ? htmlspecialchars((string) $targetUser->username, ENT_QUOTES, 'UTF-8') : 'Guest' ?></h2>
+                <div id="profileDisplayEmail" class="text-secondary mb-2"><?= $targetUser ? htmlspecialchars((string) $targetUser->email, ENT_QUOTES, 'UTF-8') : 'Please log in to manage your profile.' ?></div>
+                <?php if ($targetUser): ?>
+                  <span id="profileRoleBadge" class="badge text-bg-primary me-2">Role: <?= htmlspecialchars($roleLabel, ENT_QUOTES, 'UTF-8') ?></span>
+                  <span id="profileRatingBadge" class="badge text-bg-light">Rating: <?= (int) $targetUser->rating ?></span>
+                  <?php if ($isManagingOtherUser): ?>
+                    <span class="badge text-bg-warning ms-2">Admin managing this account</span>
+                  <?php endif; ?>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="profileMessage" class="alert d-none" role="alert"></div>
+
+        <?php if (!$targetUser): ?>
+          <div class="alert alert-warning" role="alert">
+            You need to log in to access and update your profile.
+          </div>
+        <?php else: ?>
+          <div class="row g-4">
+            <div class="col-12 col-lg-8">
+              <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+                  <h3 class="h5 mb-3">Profile Details</h3>
+                  <form id="profileDetailsForm" method="post" action="">
+                    <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                    <div class="row g-3">
+                      <div class="col-12 col-md-6">
+                        <label for="username" class="form-label">Username</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="username"
+                          name="username"
+                          maxlength="30"
+                          required
+                          value="<?= htmlspecialchars((string) $targetUser->username, ENT_QUOTES, 'UTF-8') ?>">
+                      </div>
+                      <div class="col-12 col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="email"
+                          name="email"
+                          maxlength="150"
+                          required
+                          value="<?= htmlspecialchars((string) $targetUser->email, ENT_QUOTES, 'UTF-8') ?>">
+                      </div>
+                      <div class="col-12">
+                        <label for="bio" class="form-label">Bio</label>
+                        <textarea
+                          class="form-control"
+                          id="bio"
+                          name="bio"
+                          rows="4"
+                          placeholder="Tell people about yourself"><?= htmlspecialchars((string) ($targetUser->bio ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
+                      </div>
+                      <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Save Profile</button>
+                      </div>
+                    </div>
+                  </form>
+                  <?php if ($isAdminViewer): ?>
+                    <div class="mt-3 pt-3 border-top d-flex flex-wrap align-items-end gap-2">
+                      <form id="adminDeductPointsForm" class="d-flex align-items-end gap-2 mb-0">
+                        <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                        <div>
+                          <label for="deductPointsInput" class="form-label mb-1">Points to deduct</label>
+                          <input type="number" min="1" step="1" value="50" class="form-control" id="deductPointsInput" name="points" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Deduct Points</button>
+                      </form>
+                      <form id="adminDeleteAccountForm" class="mb-0">
+                        <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                        <button type="submit" class="btn btn-danger">Delete Account</button>
+                      </form>
+                    </div>
+                  <?php endif; ?>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+              <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body p-4">
+                  <h3 class="h5 mb-3">Account Info</h3>
+                  <?php if ($isAdminViewer): ?>
+                    <form id="adminRoleForm" class="mb-3">
+                      <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                      <label for="adminRoleSelect" class="form-label">Role</label>
+                      <div class="d-flex gap-2">
+                        <select id="adminRoleSelect" name="is_admin" class="form-select">
+                          <option value="0" <?= empty($targetUser->is_admin) ? 'selected' : '' ?>>User</option>
+                          <option value="1" <?= !empty($targetUser->is_admin) ? 'selected' : '' ?>>Admin</option>
+                        </select>
+                        <button type="submit" class="btn btn-light">Update </button>
+                      </div>
+                    </form>
+                  <?php endif; ?>
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item px-0 d-flex justify-content-between">
+                      <span class="text-secondary">User ID</span>
+                      <strong id="accountInfoId"><?= (int) $targetUser->id ?></strong>
+                    </li>
+                    <li class="list-group-item px-0 d-flex justify-content-between">
+                      <span class="text-secondary">Role</span>
+                      <strong id="accountInfoRole"><?= htmlspecialchars($roleLabel, ENT_QUOTES, 'UTF-8') ?></strong>
+                    </li>
+                    <li class="list-group-item px-0 d-flex justify-content-between">
+                      <span class="text-secondary">Rating</span>
+                      <strong id="accountInfoRating"><?= (int) $targetUser->rating ?></strong>
+                    </li>
+                    <li class="list-group-item px-0 d-flex justify-content-between">
+                      <span class="text-secondary">Created</span>
+                      <strong id="accountInfoCreatedAt"><?= htmlspecialchars((string) $targetUser->created_at, ENT_QUOTES, 'UTF-8') ?></strong>
+                    </li>
+                    <li class="list-group-item px-0 d-flex justify-content-between">
+                      <span class="text-secondary">Updated</span>
+                      <strong id="accountInfoUpdatedAt"><?= htmlspecialchars((string) $targetUser->updated_at, ENT_QUOTES, 'UTF-8') ?></strong>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                  <h3 class="h5 mb-3">Change Password</h3>
+                  <form id="profilePasswordForm" method="post" action="">
+                    <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                    <div class="mb-3">
+                      <label for="current_password" class="form-label">Current password</label>
+                      <input type="password" class="form-control" id="current_password" name="current_password" <?= $requireCurrentPassword ? 'required' : '' ?>>
+                      <?php if (!$requireCurrentPassword): ?>
+                        <div class="form-text">Admin override: current password is not required when editing another user.</div>
+                      <?php endif; ?>
+                    </div>
+                    <div class="mb-3">
+                      <label for="new_password" class="form-label">New password</label>
+                      <input type="password" class="form-control" id="new_password" name="new_password" required>
+                      <div class="form-text">At least 8 characters, with upper/lowercase, a number, and a special character.</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirm_password" class="form-label">Confirm new password</label>
+                      <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    </div>
+                    <button type="submit" class="btn btn-light w-100">Update Password</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  </main>
   <script src="/public/assets/js/auth.js"></script>
+  <script src="/public/assets/js/profile.js"></script>
   <script src="/public/assets/js/index.js"></script>
   <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
 </body>

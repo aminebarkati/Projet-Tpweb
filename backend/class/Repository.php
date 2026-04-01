@@ -36,4 +36,14 @@ abstract class Repository implements IRepository
         $response = $this->db->prepare(query: $query);
         $response->execute(array_values($params));
     }
+    public function update($id, $params)
+    {
+        $keys = array_keys($params);
+        $setString = implode(',', array_map(fn($key) => "{$key} = ?", $keys));
+        $query = "UPDATE `{$this->tableName}` SET {$setString} WHERE id = ?";
+        $response = $this->db->prepare(query: $query);
+        $values = array_values($params);
+        $values[] = $id;
+        $response->execute($values);
+    }
 }

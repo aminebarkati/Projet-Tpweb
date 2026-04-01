@@ -20,4 +20,16 @@ class UserRepository extends Repository
         $response->execute([$username]);
         return $response->fetch(PDO::FETCH_OBJ);
     }
+    public function findByEmail($email)
+    {
+        $response = $this->db->prepare('SELECT id FROM users WHERE email = ?');
+        $response->execute([$email]);
+        return $response->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function deductPointsById(int $userId, int $points): void
+    {
+        $response = $this->db->prepare('UPDATE users SET rating = GREATEST(0, rating + ?) WHERE id = ?');
+        $response->execute([$points, $userId]);
+    }
 }
