@@ -19,7 +19,9 @@ if ($actorUser && !empty($actorUser->is_admin)) {
 }
 
 $isAdminViewer = $actorUser && !empty($actorUser->is_admin);
-$isManagingOtherUser = $isAdminViewer && $targetUser && ((int) $actorUser->id !== (int) $targetUser->id);
+$actorUserId = $actorUser ? (int) $actorUser->id : 0;
+$targetUserId = $targetUser ? (int) $targetUser->id : 0;
+$isManagingOtherUser = $isAdminViewer && $targetUserId > 0 && ($actorUserId !== $targetUserId);
 $requireCurrentPassword = !$isManagingOtherUser;
 
 $avatarUrlValue = $targetUser ? trim((string) ($targetUser->avatar_url ?? '')) : '';

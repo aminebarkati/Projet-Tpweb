@@ -48,3 +48,20 @@
 .btn-light:hover {
   color: white;
 }
+.enterBtn {
+  visibility: hidden;
+}
+.my-row:hover .enterBtn {
+  visibility: visible;
+}
+.my-row:hover a {
+  text-decoration: underline;
+  text-decoration-color: var(--prussian-blue);
+}
+a {
+  text-decoration: none;
+}
+
+.bg-primary {
+  background-color: var(--prussian-blue) !important;
+}

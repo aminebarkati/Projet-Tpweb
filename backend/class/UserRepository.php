@@ -7,12 +7,6 @@ class UserRepository extends Repository
     {
         return parent::__construct(self::tableName);
     }
-    public function findAllUsers()
-    {
-        $response = $this->db->query("select username from {$this->tableName}");
-        $elements = $response->fetchAll(PDO::FETCH_OBJ);
-        return $elements;
-    }
 
     public function findByUsername($username)
     {

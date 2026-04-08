@@ -1,0 +1,39 @@
+.problem-pane {
+  max-height: none;
+  overflow-y: visible;
+}
+
+.problem-io-code {
+  overflow-x: auto;
+  max-height: 200px;
+  white-space: pre;
+}
+
+.problem-copy-btn {
+  min-width: 92px;
+}
+
+.problem-code-textarea {
+  font-family: "Courier New", monospace;
+  font-size: 0.95rem;
+}
+
+.problem-side-card {
+  position: sticky;
+  top: 1rem;
+}
+
+@media (max-width: 991px) {
+  main .row > div {
+    border-right: none !important;
+  }
+
+  main .row > div:first-child {
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 1rem;
+  }
+
+  .problem-side-card {
+    position: static;
+  }
+}

@@ -37,6 +37,11 @@ unset($_SESSION["target"]);
         rel="stylesheet"
         href="/public/assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/public/assets/css/style.css" />
+    <?php if (!empty($pageStylesheets) && is_array($pageStylesheets)): ?>
+        <?php foreach ($pageStylesheets as $stylesheetPath): ?>
+            <link rel="stylesheet" href="<?= htmlspecialchars((string) $stylesheetPath, ENT_QUOTES, 'UTF-8') ?>" />
+        <?php endforeach; ?>
+    <?php endif; ?>
     <?php if ($showAutoLogoutAlert): ?>
         <script>
             window.addEventListener('DOMContentLoaded', function() {

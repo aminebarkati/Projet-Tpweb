@@ -9,7 +9,7 @@ abstract class Repository implements IRepository
     }
     public function findAll()
     {
-        $response = $this->db->query("select * from {$this->tableName}");
+        $response = $this->db->query("select * from {$this->tableName} order by id Desc");
         $elements = $response->fetchAll(PDO::FETCH_OBJ);
         return $elements;
     }
@@ -28,7 +28,6 @@ abstract class Repository implements IRepository
 
     public function create($params)
     {
-        // [name => aymen; Drop, age => 43];
         $keys = array_keys($params);
         $keyString = implode(',', $keys);
         $paramString = implode(',', array_fill(0, count(value: $keys), '?'));

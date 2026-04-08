@@ -3,7 +3,6 @@
 <?php
 session_start();
 require_once __DIR__ . '/../components/head.php';
-require_once __DIR__ . '/../../backend/autoloader.php';
 $UserRepository = new UserRepository();
 $Users = $UserRepository->findAll();
 if (!isset($_SESSION['role']) || $_SESSION["role"] != 'Admin') {

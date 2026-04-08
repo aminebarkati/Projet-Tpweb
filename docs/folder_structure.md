@@ -13,9 +13,27 @@
             ├── IRepository.php
             ├── Repository.php
             ├── UserRepository.php
+        └── 📁profile
+            ├── common.php
+            ├── deduct-points.php
+            ├── delete-account.php
+            ├── update-avatar.php
+            ├── update-password.php
+            ├── update-profile.php
+            ├── update-role.php
         ├── autoloader.php
+    └── 📁DB_queries
+        ├── build.sql
+        ├── complete_schema.sql
     └── 📁docs
+        ├── DATABASE_DESIGN_SUMMARY.md
+        ├── database_diagram.puml
+        ├── database_schema.md
+        ├── DB_Diagram.pdf
         ├── folder_structure.md
+        ├── schema_migration_guide.md
+        ├── schema_quick_reference.md
+        ├── useful_queries.sql
     └── 📁public
         └── 📁assets
             └── 📁css
@@ -25,6 +43,7 @@
                 ├── auth.js
                 ├── bootstrap.bundle.min.js
                 ├── index.js
+                ├── profile.js
             └── 📁media
                 └── 📁svg-components
                     ├── code-slash.svg
@@ -46,6 +65,12 @@
             ├── problemset.php
             ├── profile.php
             ├── submissions.php
+            ├── users.php
+    └── 📁storage
+        └── 📁imgs
+            ├── avatar_1_1774997813_5004a0ce.jpg
+            ├── avatar_3_1775068202_f92085c0.jpeg
+        └── 📁submission_files
     ├── .gitignore
     ├── favicon.ico
     ├── index.php

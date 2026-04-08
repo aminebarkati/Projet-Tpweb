@@ -6,7 +6,7 @@ $email = $_POST['email'];
 $username = $_POST['username'];
 $valid = true;
 $UserRepository = new UserRepository();
-$Users = $UserRepository->findAllUsers();
+$Users = $UserRepository->findAll();
 foreach ($Users as $User) {
     if ($User->username == $username) {
         $valid = false;
