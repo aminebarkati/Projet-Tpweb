@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     recentResponse(false, 'Method not allowed.');
 }
 
-if (empty($_SESSION['loggedIn']) || empty($_SESSION['user'])) {
+if (empty($_SESSION['user'])) {
     recentResponse(false, 'Unauthorized. Please log in.');
 }
 
@@ -31,7 +31,7 @@ $userRepository = new UserRepository();
 $submissionsRepository = new SubmissionsRepository();
 $problemRepository = new ProblemsRepository();
 
-$currentUser = $userRepository->findByUsername((string) $_SESSION['user']);
+$currentUser = $_SESSION['user'];
 if (!$currentUser) {
     recentResponse(false, 'User not found.');
 }

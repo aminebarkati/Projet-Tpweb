@@ -1,4 +1,4 @@
--- Active: 1775035885157@@127.0.0.1@3306@algosparkDB
+-- Active: 1775930662579@@127.0.0.1@3306@algosparkDB
 
 -- COMPETITIVE PROGRAMMING PLATFORM DATABASE
 drop database if exists algosparkDB;
@@ -350,14 +350,14 @@ INSERT INTO problems (title, description, difficulty, category, time_limit_ms, m
 ('Median of Two Sorted Arrays', 'Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.', 1500, 'Sorting', 1000, 256, 1);
 
 INSERT into test_cases (problem_id, input, expected_output, is_sample, order_index) VALUES
-(4, 'nums = [2,7,11,15], target = 9', '[0,1]', TRUE, 0),
-(4, 'nums = [3,2,4], target = 6', '[1,2]', TRUE, 1),
-(4, 'nums = [3,3], target = 6', '[0,1]', TRUE, 2),
-(5, 's = "abcabcbb"', '3', TRUE, 0),
-(5, 's = "bbbbb"', '1', TRUE, 1),
-(5, 's = "pwwkew"', '3', TRUE, 2),
-(6, 'nums1 = [1,3], nums2 = [2]', '2.0', TRUE, 0),
-(6, 'nums1 = [1,2], nums2 = [3,4]', '2.5', TRUE, 1),
-(6, 'nums1 = [0,0], nums2 = [0,0]', '0.0', TRUE, 2);
+(1, 'nums = [2,7,11,15], target = 9', '[0,1]', TRUE, 0),
+(1, 'nums = [3,2,4], target = 6', '[1,2]', TRUE, 1),
+(1, 'nums = [3,3], target = 6', '[0,1]', TRUE, 2),
+(2, 's = "abcabcbb"', '3', TRUE, 0),
+(2, 's = "bbbbb"', '1', TRUE, 1),
+(2, 's = "pwwkew"', '3', TRUE, 2),
+(3, 'nums1 = [1,3], nums2 = [2]', '2.0', TRUE, 0),
+(3, 'nums1 = [1,2], nums2 = [3,4]', '2.5', TRUE, 1),
+(3, 'nums1 = [0,0], nums2 = [0,0]', '0.0', TRUE, 2);
 
 SELECT * from submissions;

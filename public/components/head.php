@@ -2,26 +2,22 @@
 session_start();
 require_once __DIR__ . '/../../backend/autoloader.php';
 $UserRepository = new UserRepository();
-$isLoggedIn = !empty($_SESSION['loggedIn']) && !empty($_SESSION['user']);
-$currentUser = null;
-if (!isset($_SESSION["target"]) || $_SESSION["target"] == "") {
-    $_SESSION["target"] = $_SESSION["user"];
-}
+$isLoggedIn = !empty($_SESSION['user']);
+$currentUser = $_SESSION['user'];
+
 
 if ($isLoggedIn) {
-    $currentUser = $UserRepository->findByUsername($_SESSION['target']);
+    $currentUser = $UserRepository->findByUsername($currentUser->username);
     if (!$currentUser) {
         $_SESSION['auto_logout_missing_user'] = true;
-        unset($_SESSION['loggedIn'], $_SESSION['user'], $_SESSION['role']);
+        unset($_SESSION['user']);
         $isLoggedIn = false;
     }
 }
-
 $showAutoLogoutAlert = !empty($_SESSION['auto_logout_missing_user']);
 if ($showAutoLogoutAlert) {
     unset($_SESSION['auto_logout_missing_user']);
 }
-unset($_SESSION["target"]);
 ?>
 
 <head>

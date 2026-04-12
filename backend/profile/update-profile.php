@@ -41,10 +41,12 @@ $UserRepository->update((int) $targetUser->id, [
     'bio' => $bio !== '' ? $bio : null,
 ]);
 
-if ((int) $actorUser->id === (int) $targetUser->id) {
-    $_SESSION['user'] = $username;
-}
 $updatedUser = $UserRepository->findByUsername($username);
+
+if ((int) $actorUser->id === (int) $targetUser->id) {
+    $_SESSION['user'] = $updatedUser;
+}
+
 
 jsonResponse(true, 'Profile updated successfully.', [
     'user' => [

@@ -15,10 +15,9 @@ foreach ($Users as $User) {
 $referer = $_SERVER['HTTP_REFERER'];
 
 if ($valid) {
-    $_SESSION['user'] = $username;
-    $_SESSION['role'] = 'User';
-    $_SESSION['loggedIn'] = true;
     $UserRepository->create(["username" => $username, "email" => $email, "password" => $hashToStoreInDb]);
+    $User = $UserRepository->findByUsername($username);
+    $_SESSION['user'] = $User;
     echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
     exit;
 } else {

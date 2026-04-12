@@ -45,4 +45,68 @@ class SubmissionsRepository extends Repository
         $response->execute([$userId, $problemId]);
         return $response->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function findAll()
+    {
+        $query = "
+        select
+        s.id,
+        s.submitted_at,
+        l.name AS language_name,
+        vs.verdict,
+        vs.display_name,
+        vs.color_code,
+        s.execution_time_ms,
+        s.memory_used_mb,
+        us.username,
+        ps.difficulty,
+        ps.title
+        from {$this->tableName} s,
+        verdict_status vs, 
+        problems ps,
+        users us,
+        languages l
+        where 
+        us.id = user_id
+        and l.id=s.language_id
+        and vs.id=verdict_id 
+        and problem_id=ps.id 
+        order by s.submitted_at Desc
+        ";
+
+        $response = $this->db->query($query);
+        $elements = $response->fetchAll(PDO::FETCH_OBJ);
+        return $elements;
+    }
+
+    public function findByUserId($userId)
+    {
+        $query = "
+        select 
+        s.id,
+        s.submitted_at,
+        l.name AS language_name,
+        vs.verdict,
+        vs.display_name,
+        vs.color_code,
+        s.execution_time_ms,
+        s.memory_used_mb,
+        us.username,
+        ps.difficulty,
+        ps.title
+        from {$this->tableName} s,
+        verdict_status vs,
+        problems ps,
+        users us,
+        languages l
+        where us.id = user_id
+        and l.id=s.language_id
+        and vs.id=verdict_id
+        and problem_id=ps.id
+        and user_id = ?
+        order by s.submitted_at Desc
+        ";
+        $response = $this->db->prepare($query);
+        $response->execute([$userId]);
+        return $response->fetchAll(PDO::FETCH_OBJ);
+    }
 }

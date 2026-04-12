@@ -10,8 +10,7 @@
                 aria-label="Search" />
         </form>
         <?php
-        session_start();
-        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] == false) {
+        if (empty($_SESSION['user'])) {
             require_once 'btns-bar.php';
         } else {
             require_once 'logout-bar.php';

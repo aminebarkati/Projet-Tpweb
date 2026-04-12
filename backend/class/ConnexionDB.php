@@ -2,9 +2,9 @@
 class ConnexionDB
 {
     private static $_dbname = "algosparkDB";
-    private static $_user = "root";
-    private static $_pwd = "XddxcddC123!";
-    private static $_host = "localhost";
+    private static $_user = "clientalgospark";
+    private static $_pwd = "Algospark123!";
+    private static $_host = "127.0.0.1";
 
     private static $_bdd = null;
 

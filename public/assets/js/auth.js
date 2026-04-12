@@ -42,6 +42,7 @@ if (form) {
         body: new FormData(e.target),
       });
       const data = await res.json();
+      console.log(data.redirect);
       if (data.success) {
         window.location.href = data.redirect ?? "/";
       } else {

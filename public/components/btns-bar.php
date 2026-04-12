@@ -5,7 +5,7 @@
         id="logbtn"
         data-bs-toggle="modal"
         data-bs-target="#LogModal">
-        Login
+        Log In
     </button>
     <?php require_once "login-modal.php"; ?>
     <button
@@ -14,7 +14,7 @@
         data-bs-toggle="modal"
         data-bs-target="#signmodal"
         id="signbtn">
-        Sign-up
+        Sign Up
     </button>
     <?php require_once "signup-modal.php"; ?>
 </div>

@@ -5,7 +5,7 @@ session_start();
 require_once __DIR__ . '/../components/head.php';
 $UserRepository = new UserRepository();
 $Users = $UserRepository->findAll();
-if (!isset($_SESSION['role']) || $_SESSION["role"] != 'Admin') {
+if (empty($_SESSION['user']) || !$_SESSION["user"]->is_admin) {
     header("location:index.php");
 }
 ?>

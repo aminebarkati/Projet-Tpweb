@@ -36,6 +36,7 @@ if ($problemId <= 0) {
         <?php
         require_once __DIR__ . '/../components/nav.php';
         require_once __DIR__ . '/../components/search-bar.php';
+
         ?>
     </header>
 
@@ -50,7 +51,7 @@ if ($problemId <= 0) {
             </div>
         <?php else: ?>
             <div class="row g-0">
-                <div class="col-12 col-lg-10 border-end p-4 problem-pane">
+                <div class="col-12 col-lg-8 border-end p-4 problem-pane">
                     <div class="mb-4">
                         <a href="/public/pages/problemset.php" class="text-decoration-none text-secondary">← Back to Problemset</a>
                     </div>
@@ -146,7 +147,7 @@ if ($problemId <= 0) {
                     <?php endif; ?>
                 </div>
 
-                <div class="col-12 col-lg-2 p-4 problem-pane">
+                <div class="col-12 col-lg-4 p-4 problem-pane">
                     <div class="card shadow-sm border-0 problem-side-card">
                         <div class="card-header bg-primary text-white py-3">
                             <h5 class="mb-0">Problem Actions</h5>
@@ -164,12 +165,14 @@ if ($problemId <= 0) {
                                 <div class="alert alert-warning" role="alert">
                                     <h6 class="mb-2">Please Log In</h6>
                                     <p class="mb-0">You need to be logged in to submit a solution. Please log in or sign up to continue.</p>
-                                    <button class="btn btn-primary btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#loginModal">
+                                    <button class="btn btn-light btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#LogModal">
                                         Log In
                                     </button>
-                                    <button class="btn btn-outline-primary btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#signupModal">
+                                    <?php require_once __DIR__ . '/../components/login-modal.php';  ?>
+                                    <button class="btn btn-primary btn-sm mt-3" data-bs-toggle="modal" data-bs-target="#signmodal">
                                         Sign Up
                                     </button>
+                                    <?php require_once __DIR__ . '/../components/signup-modal.php';  ?>
                                 </div>
                             <?php endif; ?>
 

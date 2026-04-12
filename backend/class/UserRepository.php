@@ -26,4 +26,17 @@ class UserRepository extends Repository
         $response = $this->db->prepare('UPDATE users SET rating = GREATEST(0, rating + ?) WHERE id = ?');
         $response->execute([$points, $userId]);
     }
+    public function findFavouritesById($id)
+    {
+        $query = "
+        select us.*
+        from {$this->tableName} us,
+        user_favorites fav 
+        where fav.user_id = ?
+        and us.id=fav.favorite_user_id
+        ";
+        $response = $this->db->prepare($query);
+        $response->execute([$id]);
+        return $response->fetchAll(PDO::FETCH_OBJ);
+    }
 }

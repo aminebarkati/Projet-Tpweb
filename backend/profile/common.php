@@ -13,12 +13,10 @@ function jsonResponse(bool $success, string $message, array $extra = []): void
 
 function requireAuthenticatedUser(): object
 {
-    if (empty($_SESSION['loggedIn']) || empty($_SESSION['user'])) {
+    if (empty($_SESSION['user'])) {
         jsonResponse(false, 'Unauthorized. Please log in.');
     }
-
-    $userRepository = new UserRepository();
-    $currentUser = $userRepository->findByUsername($_SESSION['user']);
+    $currentUser = $_SESSION['user'];
     if (!$currentUser) {
         jsonResponse(false, 'User not found.');
     }

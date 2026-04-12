@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     submitResponse(false, 'Method not allowed.');
 }
 
-if (empty($_SESSION['loggedIn']) || empty($_SESSION['user'])) {
+if (empty($_SESSION['user'])) {
     submitResponse(false, 'Unauthorized. Please log in.');
 }
 
@@ -55,7 +55,7 @@ $problemRepository = new ProblemsRepository();
 $languagesRepository = new LanguagesRepository();
 $submissionsRepository = new SubmissionsRepository();
 
-$currentUser = $userRepository->findByUsername((string) $_SESSION['user']);
+$currentUser = $userRepository->findByUsername((string) $_SESSION['user']->username);
 if (!$currentUser) {
     submitResponse(false, 'User not found.');
 }

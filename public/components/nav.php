@@ -41,13 +41,12 @@
                     </a>
                 </li>
                 <?php
-                session_start();
-                if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin") {
+                if (empty($_SESSION['user']) || !$_SESSION["user"]->is_admin) {
                     echo "<li>
                     <a href='/public/pages/profile.php' class='tabs nav-link text-white'> Profile </a>
                     </li>";
                 }
-                if (isset($_SESSION['role']) && $_SESSION['role'] == "Admin") {
+                if (!empty($_SESSION['user']) && $_SESSION["user"]->is_admin) {
                     echo "<li>
                     <a href='/public/pages/users.php' class='tabs nav-link text-white'> Users </a>
                     </li>";

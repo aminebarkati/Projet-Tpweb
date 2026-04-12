@@ -12,10 +12,8 @@ if ($User) {
 }
 
 if ($isPasswordCorrect) {
-    $_SESSION['user'] = $username;
-    $_SESSION['role'] = !empty($User->is_admin) ? 'Admin' : 'User';
-    $_SESSION['loggedIn'] = true;
-    echo json_encode(['success' => true, 'redirect' => $_SESSION['HTTP_REFERER']]);
+    $_SESSION['user'] = $User;
+    echo json_encode(['success' => true, 'redirect' => $_SERVER['HTTP_REFERER']]);
     exit;
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid username or password !']);
