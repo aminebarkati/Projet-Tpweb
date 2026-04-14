@@ -1,0 +1,12 @@
+services:
+  dev:
+    image: algospark-judge
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+    stdin_open: true
+    tty: true
+    command: bash

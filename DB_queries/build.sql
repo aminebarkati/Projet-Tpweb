@@ -81,7 +81,8 @@ INSERT INTO verdict_status (verdict, display_name, color_code) VALUES
 ('RE', 'Runtime Error', '#e83e8c'),
 ('CE', 'Compilation Error', '#17a2b8'),
 ('PE', 'Presentation Error', '#ffc107'),
-('PENDING', 'Pending', '#6c757d');
+('PENDING', 'Pending', '#6c757d'),
+('INPROGRESS', 'In Progress', '#007bff');
 
 -- 4. PROBLEMS TABLE
 CREATE TABLE problems (
@@ -119,7 +120,10 @@ CREATE TABLE test_cases (
     INDEX idx_problem_id (problem_id),
     INDEX idx_is_sample (is_sample)
 );
-
+SELECT * FROM test_cases;
+DELETE FROM test_cases ;
+drop TABLE test_cases;
+ALTER TABLE test_cases remove COLUMN show_limit;
 -- 6. SUBMISSIONS TABLE
 CREATE TABLE submissions (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -360,5 +364,5 @@ INSERT into test_cases (problem_id, input, expected_output, is_sample, order_ind
 (3, 'nums1 = [1,3], nums2 = [2]', '2.0', TRUE, 0),
 (3, 'nums1 = [1,2], nums2 = [3,4]', '2.5', TRUE, 1),
 (3, 'nums1 = [0,0], nums2 = [0,0]', '0.0', TRUE, 2);
-
+DELETE FROM test_cases;
 SELECT * from submissions;

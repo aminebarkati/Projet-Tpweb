@@ -15,4 +15,11 @@ class TestCasesRepository extends Repository
         $response->execute([$problemId]);
         return $response->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function findByProblemId(int $problemId): array
+    {
+        $response = $this->db->prepare("SELECT * FROM {$this->tableName} WHERE problem_id = ? ORDER BY order_index ASC, id ASC");
+        $response->execute([$problemId]);
+        return $response->fetchAll(PDO::FETCH_OBJ);
+    }
 }

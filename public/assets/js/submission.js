@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
               </td>
               <td scope="col">
                 <div>
-                  <a style="display: block; width:max-content;" href="/public/pages/problem.php?problem_id=${parseInt(s.id)}">
+                  <a style="display: block; width:max-content;" href="/public/pages/problem.php?problem_id=${parseInt(s.pid)}">
                     <h6 class="text-info">${escapeHtml(s.title || "")}</h6>
                   </a>
                 </div>
