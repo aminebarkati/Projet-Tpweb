@@ -1,4 +1,4 @@
-<div class="px-3 py-4 border-bottom nav1">
+<div class="px-3 py-4 border-bottom nav1" id="#">
     <div class="container">
         <div
             class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -56,3 +56,8 @@
         </div>
     </div>
 </div>
+<a href="#">
+    <svg xmlns="http://www.w3.org/2000/svg" height="55px" viewBox="0 -960 960 960" class="up-btn" width="55px" fill="currentColor">
+        <path d="m280-400 200-201 200 201H280Z" />
+    </svg>
+</a>

@@ -39,4 +39,5 @@ class UserRepository extends Repository
         $response->execute([$id]);
         return $response->fetchAll(PDO::FETCH_OBJ);
     }
+
 }

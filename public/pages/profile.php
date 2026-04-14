@@ -158,6 +158,31 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                     </div>
                   <?php endif; ?>
                 </div>
+                <div class="card shadow-sm border-0">
+                  <div class="card-body p-4">
+                    <h3 class="h5 mb-3">Change Password</h3>
+                    <form id="profilePasswordForm" method="post" action="">
+                      <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
+                      <div class="mb-3">
+                        <label for="current_password" class="form-label">Current password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password" <?= $requireCurrentPassword ? 'required' : '' ?>>
+                        <?php if (!$requireCurrentPassword): ?>
+                          <div class="form-text">Admin override: current password is not required when editing another user.</div>
+                        <?php endif; ?>
+                      </div>
+                      <div class="mb-3">
+                        <label for="new_password" class="form-label">New password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password" required>
+                        <div class="form-text">At least 8 characters, with upper/lowercase, a number, and a special character.</div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm new password</label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                      </div>
+                      <button type="submit" class="btn btn-light w-100">Update Password</button>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -202,31 +227,7 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                   </ul>
                 </div>
               </div>
-              <div class="card shadow-sm border-0">
-                <div class="card-body p-4">
-                  <h3 class="h5 mb-3">Change Password</h3>
-                  <form id="profilePasswordForm" method="post" action="">
-                    <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                    <div class="mb-3">
-                      <label for="current_password" class="form-label">Current password</label>
-                      <input type="password" class="form-control" id="current_password" name="current_password" <?= $requireCurrentPassword ? 'required' : '' ?>>
-                      <?php if (!$requireCurrentPassword): ?>
-                        <div class="form-text">Admin override: current password is not required when editing another user.</div>
-                      <?php endif; ?>
-                    </div>
-                    <div class="mb-3">
-                      <label for="new_password" class="form-label">New password</label>
-                      <input type="password" class="form-control" id="new_password" name="new_password" required>
-                      <div class="form-text">At least 8 characters, with upper/lowercase, a number, and a special character.</div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="confirm_password" class="form-label">Confirm new password</label>
-                      <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                    </div>
-                    <button type="submit" class="btn btn-light w-100">Update Password</button>
-                  </form>
-                </div>
-              </div>
+
             </div>
           </div>
         <?php endif; ?>

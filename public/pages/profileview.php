@@ -5,30 +5,24 @@ require_once __DIR__ . '/../components/head.php';
 require_once __DIR__ . '/../../backend/autoloader.php';
 
 $UserRepository = new UserRepository();
-$actorUser = $currentUser;
-$targetUser = $actorUser;
-
-if ($actorUser && !empty($actorUser->is_admin)) {
-    $requestedTargetId = isset($_GET['username']) ? (int) $_GET['username'] : null;
-    if ($requestedTargetId > 0) {
-        $candidateTarget = $UserRepository->findByUsername($requestedTargetId);
+$FavoriteRepository = new FavoriteRepository();
+$targetUser = null;
+if (!empty($currentUser)) {
+    $requestedTargetUsername = isset($_GET['username']) ? (string) $_GET['username'] : null;
+    if (!empty($requestedTargetUsername)) {
+        $candidateTarget = $UserRepository->findByUsername($requestedTargetUsername);
         if ($candidateTarget) {
             $targetUser = $candidateTarget;
         }
     }
 }
 
-$isAdminViewer = $actorUser && !empty($actorUser->is_admin);
-$actorUserId = $actorUser ? (int) $actorUser->id : 0;
-$targetUserId = $targetUser ? (int) $targetUser->id : 0;
-$isManagingOtherUser = $isAdminViewer && $targetUserId > 0 && ($actorUserId !== $targetUserId);
-$requireCurrentPassword = !$isManagingOtherUser;
-
 $avatarUrlValue = $targetUser ? trim((string) ($targetUser->avatar_url ?? '')) : '';
 $avatarSrc = $avatarUrlValue !== '' ? '/storage/imgs/' . rawurlencode($avatarUrlValue) : '';
 $showAvatarImage = $avatarSrc !== '';
 $roleLabel = ($targetUser && !empty($targetUser->is_admin)) ? 'Admin' : 'User';
 $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)) : 'U';
+$isFavourite = !empty($FavoriteRepository->checkFavoriteById($currentUser->id, $targetUser->id));
 ?>
 
 <body>
@@ -60,20 +54,6 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                                     style="width: 96px; height: 96px; font-size: 2rem; background: linear-gradient(135deg, #385163ff, #001b2eff);">
                                     <?= htmlspecialchars($initial, ENT_QUOTES, 'UTF-8') ?>
                                 </div>
-                                <?php if ($targetUser): ?>
-                                    <form id="avatarUploadForm" method="post" action="" enctype="multipart/form-data" class="position-absolute top-0 start-0 w-100 h-100">
-                                        <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                        <label for="avatar_file_top" class="w-100 h-100 d-flex align-items-end justify-content-center text-white" style="cursor:pointer;">
-                                            <span class="badge text-bg-dark mb-1" style="opacity:0.9;">Change</span>
-                                        </label>
-                                        <input
-                                            type="file"
-                                            class="position-absolute top-0 start-0 w-100 h-100 opacity-0"
-                                            id="avatar_file_top"
-                                            name="avatar_file"
-                                            accept="image/png,image/jpeg,image/jpg,image/gif,image/webp">
-                                    </form>
-                                <?php endif; ?>
                             </div>
                             <div class="text-center text-md-start">
                                 <h2 id="profileDisplayUsername" class="h4 mb-1"><?= $targetUser ? htmlspecialchars((string) $targetUser->username, ENT_QUOTES, 'UTF-8') : 'Guest' ?></h2>
@@ -81,10 +61,14 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                                 <?php if ($targetUser): ?>
                                     <span id="profileRoleBadge" class="badge text-bg-primary me-2">Role: <?= htmlspecialchars($roleLabel, ENT_QUOTES, 'UTF-8') ?></span>
                                     <span id="profileRatingBadge" class="badge text-bg-light">Rating: <?= (int) $targetUser->rating ?></span>
-                                    <?php if ($isManagingOtherUser): ?>
-                                        <span class="badge text-bg-warning ms-2">Admin managing this account</span>
-                                    <?php endif; ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" class="star s1 <?= !$isFavourite ? 'x' : '' ?>" fill="currentColor">
+                                        <path d="m306.22-701.88 115.45-149.79q11.33-14.66 26.55-21.83 15.23-7.17 31.84-7.17t31.77 7.17q15.17 7.17 26.5 21.83l115.45 149.79L829-643q24 8 37.67 27.91 13.66 19.9 13.66 43.98 0 11.11-3.19 22.2-3.18 11.08-10.47 21.24L754-367l4 170q.33 32.33-21.67 54.67-22 22.33-52.11 22.33-1.89 0-19.89-3L480-174.33l-184.19 51.28q-5.14 2.05-10.82 2.55-5.67.5-10.4.5-30.26 0-51.92-22.46Q201-164.92 202-197.67l4-170.5L93.67-528.33q-7.29-10.22-10.48-21.37Q80-560.85 80-572q0-23.67 13.45-43.24Q106.89-634.81 131-643l175.22-58.88Z" />
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="36px" viewBox="0 -960 960 960" width="36px" class="star s2 <?= $isFavourite ? 'x' : '' ?>" fill="currentColor">
+                                        <path d="m306.22-701.88 115.45-149.79q11.33-14.66 26.55-21.83 15.23-7.17 31.84-7.17t31.77 7.17q15.17 7.17 26.5 21.83l115.45 149.79L829-643q24 8 37.67 27.91 13.66 19.9 13.66 43.98 0 11.11-3.19 22.2-3.18 11.08-10.47 21.24L754-367l4 170q.33 32.33-21.67 54.67-22 22.33-52.11 22.33-1.89 0-19.89-3L480-174.33l-184.19 51.28q-5.14 2.05-10.82 2.55-5.67.5-10.4.5-30.26 0-51.92-22.46Q201-164.92 202-197.67l4-170.5L93.67-528.33q-7.29-10.22-10.48-21.37Q80-560.85 80-572q0-23.67 13.45-43.24Q106.89-634.81 131-643l175.22-58.88Zm40.45 57.55-204 68 130.66 189-4.66 201.66L480-244l211.33 59.33-4.66-202.66 130.66-187-204-70L480-818 346.67-644.33Zm133.33 143Z" />
+                                    </svg>
                                 <?php endif; ?>
+
                             </div>
                         </div>
                     </div>
@@ -102,61 +86,17 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                             <div class="card shadow-sm border-0 h-100">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">Profile Details</h3>
-                                    <form id="profileDetailsForm" method="post" action="">
-                                        <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                        <div class="row g-3">
-                                            <div class="col-12 col-md-6">
-                                                <label for="username" class="form-label">Username</label>
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="username"
-                                                    name="username"
-                                                    maxlength="30"
-                                                    required
-                                                    value="<?= htmlspecialchars((string) $targetUser->username, ENT_QUOTES, 'UTF-8') ?>">
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <label for="email" class="form-label">Email</label>
-                                                <input
-                                                    type="email"
-                                                    class="form-control"
-                                                    id="email"
-                                                    name="email"
-                                                    maxlength="150"
-                                                    required
-                                                    value="<?= htmlspecialchars((string) $targetUser->email, ENT_QUOTES, 'UTF-8') ?>">
-                                            </div>
-                                            <div class="col-12">
-                                                <label for="bio" class="form-label">Bio</label>
-                                                <textarea
-                                                    class="form-control"
-                                                    id="bio"
-                                                    name="bio"
-                                                    rows="4"
-                                                    placeholder="Tell people about yourself"><?= htmlspecialchars((string) ($targetUser->bio ?? ''), ENT_QUOTES, 'UTF-8') ?></textarea>
-                                            </div>
-                                            <div class="col-12">
-                                                <button type="submit" class="btn btn-primary">Save Profile</button>
-                                            </div>
+                                    <div class="row g-3">
+                                        <div class="col-12">
+                                            <label for="bio" class="form-label">Bio</label>
+                                            <p
+                                                class=""
+                                                id="bio"
+                                                name="bio"
+                                                rows="4"
+                                                placeholder="Tell people about yourself"><?= htmlspecialchars((string) ($targetUser->bio ?? ''), ENT_QUOTES, 'UTF-8') ?></p>
                                         </div>
-                                    </form>
-                                    <?php if ($isAdminViewer): ?>
-                                        <div class="mt-3 pt-3 border-top d-flex flex-wrap align-items-end gap-2">
-                                            <form id="adminDeductPointsForm" class="d-flex align-items-end gap-2 mb-0">
-                                                <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                                <div>
-                                                    <label for="deductPointsInput" class="form-label mb-1">Points to deduct</label>
-                                                    <input type="number" min="1" step="1" value="50" class="form-control" id="deductPointsInput" name="points" required>
-                                                </div>
-                                                <button type="submit" class="btn btn-warning">Deduct Points</button>
-                                            </form>
-                                            <form id="adminDeleteAccountForm" class="mb-0">
-                                                <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                                <button type="submit" class="btn btn-danger">Delete Account</button>
-                                            </form>
-                                        </div>
-                                    <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -165,25 +105,13 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                             <div class="card shadow-sm border-0 mb-4">
                                 <div class="card-body p-4">
                                     <h3 class="h5 mb-3">Account Info</h3>
-                                    <?php if ($isAdminViewer): ?>
-                                        <form id="adminRoleForm" class="mb-3">
-                                            <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                            <label for="adminRoleSelect" class="form-label">Role</label>
-                                            <div class="d-flex gap-2">
-                                                <select id="adminRoleSelect" name="is_admin" class="form-select">
-                                                    <option value="0" <?= empty($targetUser->is_admin) ? 'selected' : '' ?>>User</option>
-                                                    <option value="1" <?= !empty($targetUser->is_admin) ? 'selected' : '' ?>>Admin</option>
-                                                </select>
-                                                <button type="submit" class="btn btn-light">Update </button>
-                                            </div>
-                                        </form>
-                                    <?php endif; ?>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item px-0 d-flex justify-content-between">
                                             <span class="text-secondary">User ID</span>
+                                            <input type="text" value="<?= (int) $currentUser->id ?>" hidden name="" id="user_id">
                                             <strong id="accountInfoId"><?= (int) $targetUser->id ?></strong>
                                         </li>
-                                        <li class="list-group-item px-0 d-flex justify-content-between">
+                                        <li class=" list-group-item px-0 d-flex justify-content-between">
                                             <span class="text-secondary">Role</span>
                                             <strong id="accountInfoRole"><?= htmlspecialchars($roleLabel, ENT_QUOTES, 'UTF-8') ?></strong>
                                         </li>
@@ -202,31 +130,6 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
                                     </ul>
                                 </div>
                             </div>
-                            <div class="card shadow-sm border-0">
-                                <div class="card-body p-4">
-                                    <h3 class="h5 mb-3">Change Password</h3>
-                                    <form id="profilePasswordForm" method="post" action="">
-                                        <input type="hidden" name="target_user_id" value="<?= (int) $targetUser->id ?>">
-                                        <div class="mb-3">
-                                            <label for="current_password" class="form-label">Current password</label>
-                                            <input type="password" class="form-control" id="current_password" name="current_password" <?= $requireCurrentPassword ? 'required' : '' ?>>
-                                            <?php if (!$requireCurrentPassword): ?>
-                                                <div class="form-text">Admin override: current password is not required when editing another user.</div>
-                                            <?php endif; ?>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="new_password" class="form-label">New password</label>
-                                            <input type="password" class="form-control" id="new_password" name="new_password" required>
-                                            <div class="form-text">At least 8 characters, with upper/lowercase, a number, and a special character.</div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="confirm_password" class="form-label">Confirm new password</label>
-                                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                                        </div>
-                                        <button type="submit" class="btn btn-light w-100">Update Password</button>
-                                    </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 <?php endif; ?>
@@ -236,6 +139,7 @@ $initial = $targetUser ? strtoupper(substr((string) $targetUser->username, 0, 1)
     <script src="/public/assets/js/auth.js"></script>
     <script src="/public/assets/js/profile.js"></script>
     <script src="/public/assets/js/index.js"></script>
+    <script src="/public/assets/js/favorite.js"></script>
     <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
 </body>
 

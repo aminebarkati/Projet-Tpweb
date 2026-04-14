@@ -40,7 +40,8 @@ CREATE TABLE user_favorites (
     INDEX idx_favorite_user_id (favorite_user_id),
     CONSTRAINT chk_not_self_favorite CHECK (user_id <> favorite_user_id)
 );
-
+INSERT INTO user_favorites (user_id, favorite_user_id) VALUES (1, 2);
+SELECT * FROM user_favorites;
 -- 2. PROGRAMMING LANGUAGES TABLE
 CREATE TABLE languages (
     id INT PRIMARY KEY AUTO_INCREMENT,

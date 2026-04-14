@@ -71,6 +71,7 @@ class SubmissionsRepository extends Repository
         and vs.id=verdict_id 
         and problem_id=ps.id 
         order by s.submitted_at Desc
+        limit 20
         ";
 
         $response = $this->db->query($query);
@@ -103,6 +104,39 @@ class SubmissionsRepository extends Repository
         and vs.id=verdict_id
         and problem_id=ps.id
         and user_id = ?
+        order by s.submitted_at Desc
+        ";
+        $response = $this->db->prepare($query);
+        $response->execute([$userId]);
+        return $response->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function findAllFavoritesById($userId)
+    {
+        $query = "
+        select 
+        s.id,
+        s.submitted_at,
+        l.name AS language_name,
+        vs.verdict,
+        vs.display_name,
+        vs.color_code,
+        s.execution_time_ms,
+        s.memory_used_mb,
+        us.username,
+        ps.difficulty,
+        ps.title
+        from {$this->tableName} s,
+        verdict_status vs,
+        problems ps,
+        users us,
+        languages l,
+        user_favorites fav
+        where us.id = fav.favorite_user_id
+        and fav.user_id=?
+        and l.id=s.language_id
+        and vs.id=verdict_id
+        and problem_id=ps.id
+        and s.user_id =fav.favorite_user_id 
         order by s.submitted_at Desc
         ";
         $response = $this->db->prepare($query);

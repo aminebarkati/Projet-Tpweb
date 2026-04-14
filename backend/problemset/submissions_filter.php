@@ -21,10 +21,7 @@ switch ($type) {
         break;
     case 'favourites':
         if ($currentUser) {
-            $Users = $UserRepository->findFavouritesById($currentUser->id);
-            foreach ($Users as $User) {
-                $submissions += $SubmissionsRepository->findByUserId($currentUser->id);
-            }
+            $submissions = $SubmissionsRepository->findAllFavoritesById($currentUser->id);
         } else {
             http_response_code(401);
             echo json_encode(['error' => 'Not logged in']);
