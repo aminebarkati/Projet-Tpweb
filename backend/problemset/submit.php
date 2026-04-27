@@ -80,6 +80,44 @@ if ($attachedFilename !== '') {
     }
 }
 
-$submissionsRepository->createPending((int) $currentUser->id, $problemId, $languageId, $code);
+$selectedExtension = strtolower(trim((string) ($language->file_extension ?? '')));
+if ($selectedExtension === '' && $attachedFilename !== '') {
+    $attachedExtension = strtolower(pathinfo($attachedFilename, PATHINFO_EXTENSION));
+    $selectedExtension = $attachedExtension !== '' ? '.' . $attachedExtension : '';
+}
+
+if ($selectedExtension === '') {
+    $selectedExtension = '.txt';
+}
+
+if ($selectedExtension[0] !== '.') {
+    $selectedExtension = '.' . $selectedExtension;
+}
+
+$selectedExtension = preg_replace('/[^a-z0-9.]/', '', $selectedExtension) ?: '.txt';
+
+$submissionId = null;
+
+try {
+    $submissionId = $submissionsRepository->createPending((int) $currentUser->id, $problemId, $languageId);
+
+    $relativeFilePath = (int) $currentUser->id . '/' . $submissionId . $selectedExtension;
+    $baseSubmissionsDir = dirname(__DIR__, 2) . '/storage/submission_files';
+    $absoluteFilePath = $baseSubmissionsDir . '/' . $relativeFilePath;
+    $targetDirectory = dirname($absoluteFilePath);
+
+    if (!is_dir($targetDirectory) && !mkdir($targetDirectory, 0755, true) && !is_dir($targetDirectory)) {
+        throw new RuntimeException('Could not create submissions directory.');
+    }
+
+    if (file_put_contents($absoluteFilePath, $code) === false) {
+        throw new RuntimeException('Could not store submitted code.');
+    }
+} catch (Throwable $exception) {
+    if (!empty($submissionId ?? null)) {
+        $submissionsRepository->delete((int) $submissionId);
+    }
+    submitResponse(false, 'Submission could not be saved. Please try again.');
+}
 
 submitResponse(true, 'Submission received. Your solution is queued for judging.');

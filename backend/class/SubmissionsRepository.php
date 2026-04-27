@@ -3,21 +3,21 @@
 class SubmissionsRepository extends Repository
 {
     const tableName = 'submissions';
+    private const PENDING_VERDICT_ID = 8;
 
     public function __construct()
     {
         return parent::__construct(self::tableName);
     }
 
-    public function createPending(int $userId, int $problemId, int $languageId, string $code): void
+    public function createPending(int $userId, int $problemId, int $languageId): int
     {
-        $this->create([
-            'user_id' => $userId,
-            'problem_id' => $problemId,
-            'language_id' => $languageId,
-            'code' => $code,
-            'verdict_id' => 8,
-        ]);
+        $insert = $this->db->prepare(
+            "INSERT INTO {$this->tableName} (user_id, problem_id, language_id, verdict_id) VALUES (?, ?, ?, ?)"
+        );
+        $insert->execute([$userId, $problemId, $languageId, self::PENDING_VERDICT_ID]);
+
+        return (int) $this->db->lastInsertId();
     }
 
     public function findPending(int $limit = 20): array
@@ -29,7 +29,6 @@ class SubmissionsRepository extends Repository
                 s.user_id,
                 s.problem_id,
                 s.language_id,
-                s.code,
                 s.submitted_at,
                 p.title AS problem_title,
                 p.time_limit_ms,

@@ -36,11 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <small>${escapeHtml(s.category || "")}</small>
               </td>
               <td>${escapeHtml(s.language_name || "")}</td>
-              <td><h6 class="text-secondary">${escapeHtml(s.display_name || "")}</h6></td>
+              <td><h6 style="color :${s.color_code || "black"}">${escapeHtml(s.display_name || "")}</h6></td>
               <td>${escapeHtml(s.difficulty || "")}</td>
-              <td>${escapeHtml(s.success_count || "")}</td>
-              <td>${escapeHtml(s.execution_time_ms || "-")}</td>
-              <td>${escapeHtml(s.memory_used_mb || "-")}</td>
+              <td>${escapeHtml(s.execution_time_ms || "-")}ms</td>
+              <td>${escapeHtml(s.memory_used_mb || "-")}mb</td>
 
             </tr>
           `;

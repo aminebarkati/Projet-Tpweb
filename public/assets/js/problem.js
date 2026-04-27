@@ -280,19 +280,20 @@ document.addEventListener("DOMContentLoaded", function () {
     return items
       .map(function (item) {
         const verdict = item.verdict || "PENDING";
-        const verdictClass = mapVerdictClass(verdict);
+        const verdictColor = item.color_code || "black";
         const submittedAt = formatDateTime(item.submitted_at);
         const languageName = item.language_name || "Unknown";
         const execTime =
           item.execution_time_ms != null
             ? String(item.execution_time_ms) + " ms"
             : "-";
-
+        console.log(verdictColor);
         return (
           '<div class="border rounded p-2 mb-2 bg-white">' +
           '<div class="d-flex justify-content-between align-items-center mb-1">' +
-          '<span class="badge ' +
-          verdictClass +
+          '<span class="badge" ' +
+          ' style="background-color:' +
+          verdictColor +
           '">' +
           escapeHtml(verdict) +
           "</span>" +
@@ -313,23 +314,6 @@ document.addEventListener("DOMContentLoaded", function () {
         );
       })
       .join("");
-  }
-
-  function mapVerdictClass(verdict) {
-    switch (String(verdict).toUpperCase()) {
-      case "AC":
-        return "text-bg-success";
-      case "WA":
-      case "RE":
-      case "CE":
-        return "text-bg-danger";
-      case "TLE":
-      case "MLE":
-      case "PE":
-        return "text-bg-warning";
-      default:
-        return "text-bg-secondary";
-    }
   }
 
   function formatDateTime(value) {
