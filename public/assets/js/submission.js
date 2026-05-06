@@ -29,18 +29,17 @@ document.addEventListener("DOMContentLoaded", function () {
               </td>
               <td scope="col">
                 <div>
-                  <a style="display: block; width:max-content;" href="/public/pages/problem.php?problem_id=${parseInt(s.id)}">
+                  <a style="display: block; width:max-content;" href="/public/pages/problem.php?problem_id=${parseInt(s.pid)}">
                     <h6 class="text-info">${escapeHtml(s.title || "")}</h6>
                   </a>
                 </div>
                 <small>${escapeHtml(s.category || "")}</small>
               </td>
               <td>${escapeHtml(s.language_name || "")}</td>
-              <td><h6 class="text-secondary">${escapeHtml(s.display_name || "")}</h6></td>
+              <td><h6 style="color :${s.color_code || "black"}">${escapeHtml(s.display_name || "")}</h6></td>
               <td>${escapeHtml(s.difficulty || "")}</td>
-              <td>${escapeHtml(s.success_count || "")}</td>
-              <td>${escapeHtml(s.execution_time_ms || "-")}</td>
-              <td>${escapeHtml(s.memory_used_mb || "-")}</td>
+              <td>${escapeHtml(s.execution_time_ms || "-")}ms</td>
+              <td>${escapeHtml(s.memory_used_mb || "-")}mb</td>
 
             </tr>
           `;

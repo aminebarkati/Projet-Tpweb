@@ -40,8 +40,6 @@ CREATE TABLE user_favorites (
     INDEX idx_favorite_user_id (favorite_user_id),
     CONSTRAINT chk_not_self_favorite CHECK (user_id <> favorite_user_id)
 );
-INSERT INTO user_favorites (user_id, favorite_user_id) VALUES (1, 2);
-SELECT * FROM user_favorites;
 -- 2. PROGRAMMING LANGUAGES TABLE
 CREATE TABLE languages (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -81,7 +79,8 @@ INSERT INTO verdict_status (verdict, display_name, color_code) VALUES
 ('RE', 'Runtime Error', '#e83e8c'),
 ('CE', 'Compilation Error', '#17a2b8'),
 ('PE', 'Presentation Error', '#ffc107'),
-('PENDING', 'Pending', '#6c757d');
+('PENDING', 'Pending', '#6c757d'),
+('INPROGRESS', 'In Progress', '#007bff');
 
 -- 4. PROBLEMS TABLE
 CREATE TABLE problems (
@@ -119,14 +118,12 @@ CREATE TABLE test_cases (
     INDEX idx_problem_id (problem_id),
     INDEX idx_is_sample (is_sample)
 );
-
 -- 6. SUBMISSIONS TABLE
 CREATE TABLE submissions (
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     problem_id INT NOT NULL,
     language_id INT NOT NULL,
-    code LONGTEXT NOT NULL,
     verdict_id INT DEFAULT 8,
     execution_time_ms INT,
     memory_used_mb INT,
@@ -134,6 +131,7 @@ CREATE TABLE submissions (
     total_tests INT,
     error_message LONGTEXT,
     submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    judged_at TIMESTAMP NULL,
     
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (problem_id) REFERENCES problems(id) ON DELETE CASCADE,
@@ -143,7 +141,6 @@ CREATE TABLE submissions (
     INDEX idx_verdict (verdict_id),
     INDEX idx_submitted_at (submitted_at)
 );
-
 -- 7. CONTESTS TABLE
 CREATE TABLE contests (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -172,7 +169,6 @@ CREATE TABLE contests (
     INDEX idx_start_time (start_time),
     INDEX idx_end_time (end_time)
 );
-
 -- 7.B CONTEST APPROVAL AUDIT TABLE
 CREATE TABLE contest_approval_logs (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -346,19 +342,9 @@ GROUP BY u.id, u.username;
 UPDATE users SET is_admin = TRUE WHERE username = 'admin';
 
 INSERT INTO problems (title, description, difficulty, category, time_limit_ms, memory_limit_mb, author_id) VALUES
-('Two Sum', 'Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.', 800, 'Arrays', 1000, 256, 1),
-('Longest Substring Without Repeating Characters', 'Given a string s, find the length of the longest substring without repeating characters.', 1200, 'Strings', 1000, 256, 1),
-('Median of Two Sorted Arrays', 'Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.', 1500, 'Sorting', 1000, 256, 1);
+('A. Minimize!', 'You are given two integers a and b (a <= b). Over all possible integer values of c (a <= c <= b), find the minimum value of (c - a) + (b - c).\n\nInput\nThe first line contains t (1 <= t <= 55) - the number of test cases.\nEach test case contains two integers a and b (1 <= a <= b <= 10).\n\nOutput\nFor each test case, output the minimum possible value of (c - a) + (b - c) on a new line.', 700, 'Math', 1000, 256, 1);
 
 INSERT into test_cases (problem_id, input, expected_output, is_sample, order_index) VALUES
-(1, 'nums = [2,7,11,15], target = 9', '[0,1]', TRUE, 0),
-(1, 'nums = [3,2,4], target = 6', '[1,2]', TRUE, 1),
-(1, 'nums = [3,3], target = 6', '[0,1]', TRUE, 2),
-(2, 's = "abcabcbb"', '3', TRUE, 0),
-(2, 's = "bbbbb"', '1', TRUE, 1),
-(2, 's = "pwwkew"', '3', TRUE, 2),
-(3, 'nums1 = [1,3], nums2 = [2]', '2.0', TRUE, 0),
-(3, 'nums1 = [1,2], nums2 = [3,4]', '2.5', TRUE, 1),
-(3, 'nums1 = [0,0], nums2 = [0,0]', '0.0', TRUE, 2);
-
-SELECT * from submissions;
+(4, '3\n1 2\n3 10\n5 5\n', '1\n7\n0\n', TRUE, 0),
+(4, '2\n1 1\n2 9\n', '0\n7\n', TRUE, 1),
+(4, '1\n4 8\n', '4\n', TRUE, 2);

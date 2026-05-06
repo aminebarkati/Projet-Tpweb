@@ -46,14 +46,14 @@ if ($problemId <= 0) {
                 <div class="alert alert-danger" role="alert">
                     <h4>Error</h4>
                     <p><?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?></p>
-                    <a href="/public/pages/problemset.php" class="btn btn-primary">← Back to Problemset</a>
+                    <a href="<?= $_SERVER["HTTP_REFERER"] ?>" class="btn btn-primary">← Back</a>
                 </div>
             </div>
         <?php else: ?>
             <div class="row g-0">
                 <div class="col-12 col-lg-8 border-end p-4 problem-pane">
                     <div class="mb-4">
-                        <a href="/public/pages/problemset.php" class="text-decoration-none text-secondary">← Back to Problemset</a>
+                        <a href="<?= $_SERVER["HTTP_REFERER"] ?>" class="text-decoration-none text-secondary">← Back </a>
                     </div>
 
                     <div class="mb-4">

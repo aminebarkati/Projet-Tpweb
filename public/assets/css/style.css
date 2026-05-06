@@ -85,11 +85,11 @@ a {
     "opsz" 40;
   background-color: var(--prussian-blue);
   color: white;
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   border-radius: 50%;
   /* border: 1px solid; */
   border-color: var(--prussian-blue);
-  box-shadow: 5px 2px 1px rgba(0, 27, 46, 0.258);
+  box-shadow: 2px 2px 1px rgba(0, 27, 46, 0.258);
 }

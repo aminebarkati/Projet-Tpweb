@@ -10,13 +10,26 @@
             ├── signup.php
         └── 📁class
             ├── ConnexionDB.php
+            ├── FavoriteRepository.php
             ├── IRepository.php
+            ├── LanguagesRepository.php
+            ├── ProblemsRepository.php
             ├── Repository.php
+            ├── SubmissionsRepository.php
+            ├── TestCasesRepository.php
             ├── UserRepository.php
+        └── 📁judging engine
+            ├── worker.php
+        └── 📁problemset
+            ├── recent-submissions.php
+            ├── submissions_filter.php
+            ├── submit.php
         └── 📁profile
             ├── common.php
             ├── deduct-points.php
             ├── delete-account.php
+            ├── delete-favorite.php
+            ├── make-favorite.php
             ├── update-avatar.php
             ├── update-password.php
             ├── update-profile.php
@@ -26,27 +39,43 @@
         ├── build.sql
         ├── complete_schema.sql
     └── 📁docs
-        ├── DATABASE_DESIGN_SUMMARY.md
-        ├── database_diagram.puml
-        ├── database_schema.md
-        ├── DB_Diagram.pdf
+        └── 📁CSI
+            ├── app_architecture.puml
+            ├── app_communications_sequence.puml
+            ├── Flow-final.pdf
+            ├── Flow.pdf
+            ├── Sequence-final.pdf
+            ├── Sequence.pdf
+        └── 📁DB
+            ├── DATABASE_DESIGN_SUMMARY.md
+            ├── database_diagram.puml
+            ├── database_schema.md
+            ├── DB_Diagram.pdf
+            ├── schema_migration_guide.md
+            ├── schema_quick_reference.md
         ├── folder_structure.md
-        ├── schema_migration_guide.md
-        ├── schema_quick_reference.md
-        ├── useful_queries.sql
+        ├── implementation_todo_2_weeks.txt
+        ├── WORKER.md
     └── 📁public
         └── 📁assets
             └── 📁css
                 ├── bootstrap.min.css
+                ├── problem.css
                 ├── style.css
             └── 📁js
                 ├── auth.js
                 ├── bootstrap.bundle.min.js
+                ├── favorite.js
                 ├── index.js
+                ├── problem.js
                 ├── profile.js
+                ├── submission.js
             └── 📁media
                 └── 📁svg-components
                     ├── code-slash.svg
+                    ├── star.svg
+                    ├── star2.svg
+                    ├── up.svg
                 ├── code-slash.png
                 ├── palette.png
         └── 📁components
@@ -64,14 +93,21 @@
             ├── problem.php
             ├── problemset.php
             ├── profile.php
+            ├── profileview.php
             ├── submissions.php
             ├── users.php
     └── 📁storage
         └── 📁imgs
             ├── avatar_1_1774997813_5004a0ce.jpg
+            ├── avatar_2_1776109847_f69eaeb3.jpg
             ├── avatar_3_1775068202_f92085c0.jpeg
+            ├── avatar_3_1776167479_800ac33d.jpg
         └── 📁submission_files
+            └── 📁1
+                ├── 6.py
     ├── .gitignore
+    ├── docker-compose.yml
+    ├── Dockerfile
     ├── favicon.ico
     ├── index.php
     ├── README.md

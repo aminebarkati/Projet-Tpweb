@@ -43,14 +43,14 @@ $Submissions = $SubmissionsRepository->findAll();
       </caption>
       <thead>
         <th scope="col">Id</th>
-        <th scope="col">Time</th>
+        <th scope="col">Submission Time</th>
         <th scope="col">Username</th>
         <th scope="col">Name</th>
         <th scope="col">Language</th>
         <th scope="col">Verdict</th>
         <th scope="col">Difficulity</th>
-        <th scope="col">MS</th>
-        <th scope="col">MB</th>
+        <th scope="col">Runtime</th>
+        <th scope="col">Memory</th>
       </thead>
       <tbody class="table-group-divider">
       </tbody>

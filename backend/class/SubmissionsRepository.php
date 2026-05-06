@@ -3,20 +3,67 @@
 class SubmissionsRepository extends Repository
 {
     const tableName = 'submissions';
+    private const PENDING_VERDICT_ID = 8;
 
     public function __construct()
     {
         return parent::__construct(self::tableName);
     }
 
-    public function createPending(int $userId, int $problemId, int $languageId, string $code): void
+    public function createPending(int $userId, int $problemId, int $languageId): int
     {
-        $this->create([
-            'user_id' => $userId,
-            'problem_id' => $problemId,
-            'language_id' => $languageId,
-            'code' => $code,
-            'verdict_id' => 8,
+        $insert = $this->db->prepare(
+            "INSERT INTO {$this->tableName} (user_id, problem_id, language_id, verdict_id) VALUES (?, ?, ?, ?)"
+        );
+        $insert->execute([$userId, $problemId, $languageId, self::PENDING_VERDICT_ID]);
+
+        return (int) $this->db->lastInsertId();
+    }
+
+    public function findPending(int $limit = 20): array
+    {
+        $safeLimit = max(1, min($limit, 100));
+        $query = "
+            SELECT
+                s.id,
+                s.user_id,
+                s.problem_id,
+                s.language_id,
+                s.submitted_at,
+                p.title AS problem_title,
+                p.time_limit_ms,
+                p.memory_limit_mb,
+                l.name AS language_name,
+                l.file_extension,
+                l.compiler_command
+            FROM {$this->tableName} s
+            INNER JOIN verdict_status v ON v.id = s.verdict_id AND v.verdict = 'PENDING'
+            INNER JOIN problems p ON p.id = s.problem_id
+            INNER JOIN languages l ON l.id = s.language_id
+            ORDER BY s.submitted_at ASC, s.id ASC
+            LIMIT {$safeLimit}
+        ";
+
+        $response = $this->db->query($query);
+        return $response->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function updateJudgingResult(
+        int $submissionId,
+        int $verdictId,
+        ?int $executionTimeMs,
+        ?int $memoryUsedMb,
+        int $passedTests,
+        int $totalTests,
+        ?string $errorMessage
+    ): void {
+        $this->update($submissionId, [
+            'verdict_id' => $verdictId,
+            'execution_time_ms' => $executionTimeMs,
+            'memory_used_mb' => $memoryUsedMb,
+            'passed_tests' => $passedTests,
+            'total_tests' => $totalTests,
+            'error_message' => $errorMessage,
         ]);
     }
 
@@ -50,6 +97,7 @@ class SubmissionsRepository extends Repository
         $query = "
         select
         s.id,
+        ps.category,
         s.submitted_at,
         l.name AS language_name,
         vs.verdict,
@@ -59,7 +107,8 @@ class SubmissionsRepository extends Repository
         s.memory_used_mb,
         us.username,
         ps.difficulty,
-        ps.title
+        ps.title,
+        ps.id as pid
         from {$this->tableName} s,
         verdict_status vs, 
         problems ps,
@@ -84,6 +133,7 @@ class SubmissionsRepository extends Repository
         $query = "
         select 
         s.id,
+        ps.category,
         s.submitted_at,
         l.name AS language_name,
         vs.verdict,
@@ -93,7 +143,8 @@ class SubmissionsRepository extends Repository
         s.memory_used_mb,
         us.username,
         ps.difficulty,
-        ps.title
+        ps.title,
+        ps.id as pid
         from {$this->tableName} s,
         verdict_status vs,
         problems ps,
@@ -115,6 +166,7 @@ class SubmissionsRepository extends Repository
         $query = "
         select 
         s.id,
+        ps.category,
         s.submitted_at,
         l.name AS language_name,
         vs.verdict,
@@ -124,7 +176,8 @@ class SubmissionsRepository extends Repository
         s.memory_used_mb,
         us.username,
         ps.difficulty,
-        ps.title
+        ps.title,
+        ps.id as pid
         from {$this->tableName} s,
         verdict_status vs,
         problems ps,
