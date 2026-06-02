@@ -54,7 +54,6 @@ This web application provides a fully-functional competitive programming environ
 ### Future Features (Not Yet Implemented)
 
 - Problem creation and editing UI
-- Contest system and scheduling
 - Problem discussions and comments
 - Solution editorials and explanations
 - Real-time notifications
@@ -341,7 +340,6 @@ VALUES (problem_id, 'input', 'output', 1);
 
 ## 📝 Notes
 
-- **Contest System**: The contest concept has been dropped for now. The platform focuses on problem solving and leaderboards. Contest features may be revisited in the future.
 - **Worker Process**: The judging engine must be running as a background process for submissions to be judged. In production, consider using a process manager like `supervisor` to keep it running.
 - **Real-time Updates**: Currently uses polling; WebSocket support for real-time updates may be added in the future.
 - **Educational Project**: This is an educational competitive programming platform suitable for learning and practice environments.
